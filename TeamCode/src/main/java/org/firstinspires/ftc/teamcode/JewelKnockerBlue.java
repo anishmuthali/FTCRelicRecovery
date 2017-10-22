@@ -19,6 +19,7 @@ public class JewelKnockerBlue extends LinearOpMode
     private DcMotor backRight = null;
     private ColorSensor colorsensor = null;
     private Servo servo1 = null;
+    private Servo servo2 = null;
 
     @Override
     public void runOpMode()
@@ -30,14 +31,15 @@ public class JewelKnockerBlue extends LinearOpMode
         backLeft = hardwareMap.get(DcMotor.class, "back_left");
         backRight = hardwareMap.get(DcMotor.class, "back_right");
         colorsensor = hardwareMap.get(ColorSensor.class, "jewel_sensor");
-        servo1 = hardwareMap.get(Servo.class, "jewel_knocker");
+        servo1 = hardwareMap.get(Servo.class, "jewel_knocker_updown");
+        servo2 = hardwareMap.get(Servo.class, "jewel_knocker_sideways");
 
         servo1.setPosition(0.8);
         try
         {
             backLeft.setPower(1);
             backRight.setPower(1);
-            Thread.sleep(1000);
+            Thread.sleep(500);
         }
         catch (InterruptedException e)
         {
@@ -47,37 +49,15 @@ public class JewelKnockerBlue extends LinearOpMode
         backRight.setPower(0);
 
 
-        //If the color sensor detects blue, turn in the direction it faces.
-        // If not, turn in the opposite direction.
+        //If the color sensor detects blue, turn the servo in the direction it faces.
+        // If not, turn it in the opposite direction.
         if (colorsensor.blue() > colorsensor.red())
         {
-            try
-            {
-                backLeft.setPower(1);
-                backRight.setPower(-1);
-                Thread.sleep(1000);
-            }
-            catch (InterruptedException e)
-            {
-
-            }
-            backLeft.setPower(0);
-            backRight.setPower(0);
+            servo2.setPosition(0.2);
         }
         else
         {
-            try
-            {
-                backLeft.setPower(-1);
-                backRight.setPower(1);
-                Thread.sleep(1000);
-            }
-            catch (InterruptedException e)
-            {
-
-            }
-            backLeft.setPower(0);
-            backRight.setPower(0);
+            servo2.setPosition(0.8);
         }
     }
 }
