@@ -5,6 +5,11 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public class Helloworld {
+<<<<<<< HEAD
 
+=======
+    //test by Nitin
+    
+>>>>>>> e714f8b588294019b5336761f93287d5e721578d
 }
 
