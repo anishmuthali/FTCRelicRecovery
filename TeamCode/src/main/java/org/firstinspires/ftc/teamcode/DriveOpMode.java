@@ -67,6 +67,6 @@ public class DriveOpMode extends OpMode{
         frontRight.setPower(rightPower);
         backRight.setPower(rightPower);
 
-        telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+        telemetry.addData("Motors", ("left: " + leftPower + "right: " + rightPower));
     }
 }
