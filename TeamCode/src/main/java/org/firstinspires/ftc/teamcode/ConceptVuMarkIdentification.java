@@ -91,21 +91,9 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
 
         // OR...  Do Not Activate the Camera Monitor View, to save power
         // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        
 
-        /*
-         * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-         * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
-         * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
-         * web site at https://developer.vuforia.com/license-manager.
-         *
-         * Vuforia license keys are always 380 characters long, and look as if they contain mostly
-         * random data. As an example, here is a example of a fragment of a valid key:
-         *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
-         * Once you've obtained a license key, copy the string from the Vuforia web site
-         * and paste it in to your code onthe next line, between the double quotes.
-         */
-
-        // OUR LICENSE KEY HAS BEEN ADDED. DISREGARD THE COMMENT RIGHT ABOVE THIS ONE
+        // OUR LICENSE KEY HAS BEEN ADDED
         parameters.vuforiaLicenseKey = "AYayIj//////AAAAGTWTdGR/pEJSqhvrU8GrHQUVd8evZo2qdFTmkM5Bv1TlQ1+qZv/mNf51/HwF6yjgQCdsb+5wAxgWi8eEqeGbFhmHW7+M3m1eH3rmoUNt8BfycYhH0IdcYXPZ1hYu/eOSieOK3Z6taYUpXCUNfzLBz86QHRiPj/px9OYpqDK/lRqmu7dmhexMO56IvOaUf6VCFqTIWLzUYhmp5+dT2PY0jAm/Hoek3hPV+xUCjA39wqgy9aQehrBasI8KMzDcwK+MXMWaUyYa2g63cWUDj6lvAvJds2jZEz5WV7Yhb+cq5r3Zy+C0cHUjUFfIyCABa7odjPCJ7DjBJbVuVIpahSA0nGZ7unqXJI9JO+Q7QI5545U4";
 
         /*
