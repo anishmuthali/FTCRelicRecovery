@@ -12,7 +12,6 @@ import com.qualcomm.robotcore.util.Range;
  * Created by anishmuthali on 9/27/17.
  */
 @TeleOp(name="TestBaseOpMode", group="OpMode")
-@Disabled
 public class DriveOpMode extends OpMode{
     ElapsedTime runtime = new ElapsedTime();
     private DcMotor frontLeft = null;
