@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by Nitin on 10/17/2017.
  */
 @Autonomous(name = "Blue Jewel Knocker")
+//@Disabled
 public class JewelKnockerBlue extends LinearOpMode
 {
 
