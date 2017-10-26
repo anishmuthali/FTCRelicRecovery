@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -12,6 +10,7 @@ import com.qualcomm.robotcore.util.Range;
  * Created by anishmuthali on 9/27/17.
  */
 @TeleOp(name="TestBaseOpMode", group="OpMode")
+//@Disabled
 public class DriveOpMode extends OpMode{
     ElapsedTime runtime = new ElapsedTime();
     private DcMotor frontLeft = null;
