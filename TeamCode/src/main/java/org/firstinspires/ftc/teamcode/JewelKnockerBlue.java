@@ -22,7 +22,7 @@ public class JewelKnockerBlue extends LinearOpMode
     private Servo servo2 = null;
 
     @Override
-    public void runOpMode()
+    public void runOpMode() throws InterruptedException
     {
         waitForStart();
         // Find motors on hardware map
@@ -34,17 +34,16 @@ public class JewelKnockerBlue extends LinearOpMode
         servo1 = hardwareMap.get(Servo.class, "jewel_knocker_updown");
         servo2 = hardwareMap.get(Servo.class, "jewel_knocker_sideways");
 
-        servo1.setPosition(0.8);
-        try
-        {
-            backLeft.setPower(1);
-            backRight.setPower(1);
-            Thread.sleep(500);
-        }
-        catch (InterruptedException e)
-        {
+        //set the directions
+        frontLeft.setDirection(DcMotor.Direction.FORWARD);
+        backLeft.setDirection(DcMotor.Direction.FORWARD);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
 
-        }
+        servo1.setPosition(0.8);
+        backLeft.setPower(1);
+        backRight.setPower(1);
+        Thread.sleep(500);
         backLeft.setPower(0);
         backRight.setPower(0);
 
