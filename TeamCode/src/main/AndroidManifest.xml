@@ -8,5 +8,8 @@
 <manifest
     package="org.firstinspires.ftc.teamcode"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <permission android:name="android.permission.FLASHLIGHT"
+        android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"
+        android:protectionLevel="normal"/>
     <application/>
 </manifest>

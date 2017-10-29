@@ -28,8 +28,13 @@
  */
 package org.firstinspires.ftc.teamcode;
 
+
+
+import android.hardware.Camera;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.vuforia.CameraCalibration;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -72,6 +77,7 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
     public static final String TAG = "Vuforia VuMark Sample";
 
     OpenGLMatrix lastLocation = null;
+    Camera camera;
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
@@ -91,7 +97,11 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
         // OR...  Do Not Activate the Camera Monitor View, to save power
         // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
-
+        camera = Camera.open();
+        Camera.Parameters cameraParameters = camera.getParameters();
+        cameraParameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        camera.setParameters(cameraParameters);
+        camera.startPreview();
         // OUR LICENSE KEY HAS BEEN ADDED
         parameters.vuforiaLicenseKey = "AYayIj//////AAAAGTWTdGR/pEJSqhvrU8GrHQUVd8evZo2qdFTmkM5Bv1TlQ1+qZv/mNf51/HwF6yjgQCdsb+5wAxgWi8eEqeGbFhmHW7+M3m1eH3rmoUNt8BfycYhH0IdcYXPZ1hYu/eOSieOK3Z6taYUpXCUNfzLBz86QHRiPj/px9OYpqDK/lRqmu7dmhexMO56IvOaUf6VCFqTIWLzUYhmp5+dT2PY0jAm/Hoek3hPV+xUCjA39wqgy9aQehrBasI8KMzDcwK+MXMWaUyYa2g63cWUDj6lvAvJds2jZEz5WV7Yhb+cq5r3Zy+C0cHUjUFfIyCABa7odjPCJ7DjBJbVuVIpahSA0nGZ7unqXJI9JO+Q7QI5545U4";
 
@@ -101,6 +111,7 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
          * for a competition robot, the front camera might be more convenient.
          */
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
         /**
@@ -164,9 +175,14 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
 
             telemetry.update();
         }
+        if(!opModeIsActive()){
+            camera.stopPreview();
+            camera.release();
+        }
     }
 
     String format(OpenGLMatrix transformationMatrix) {
         return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
     }
+
 }
