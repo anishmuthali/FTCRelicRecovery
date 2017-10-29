@@ -97,11 +97,11 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
         // OR...  Do Not Activate the Camera Monitor View, to save power
         // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
-        camera = Camera.open();
+        /*camera = Camera.open();
         Camera.Parameters cameraParameters = camera.getParameters();
         cameraParameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
         camera.setParameters(cameraParameters);
-        camera.startPreview();
+        camera.startPreview();*/
         // OUR LICENSE KEY HAS BEEN ADDED
         parameters.vuforiaLicenseKey = "AYayIj//////AAAAGTWTdGR/pEJSqhvrU8GrHQUVd8evZo2qdFTmkM5Bv1TlQ1+qZv/mNf51/HwF6yjgQCdsb+5wAxgWi8eEqeGbFhmHW7+M3m1eH3rmoUNt8BfycYhH0IdcYXPZ1hYu/eOSieOK3Z6taYUpXCUNfzLBz86QHRiPj/px9OYpqDK/lRqmu7dmhexMO56IvOaUf6VCFqTIWLzUYhmp5+dT2PY0jAm/Hoek3hPV+xUCjA39wqgy9aQehrBasI8KMzDcwK+MXMWaUyYa2g63cWUDj6lvAvJds2jZEz5WV7Yhb+cq5r3Zy+C0cHUjUFfIyCABa7odjPCJ7DjBJbVuVIpahSA0nGZ7unqXJI9JO+Q7QI5545U4";
 
