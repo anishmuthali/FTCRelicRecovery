@@ -38,7 +38,7 @@ public class TorquenadoTest extends OpMode{
             test.setPower(0);
         }
         // if L1 is not held, keep the arm in place. provide enough power that the arm doesn't move up or down
-        else if(!on){
+        else{
             test.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             test.setPower(0);
         }
