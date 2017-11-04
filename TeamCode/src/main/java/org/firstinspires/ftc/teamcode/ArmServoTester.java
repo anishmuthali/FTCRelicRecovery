@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * Created by Nitin on 11/2/2017.
  */
-
+@TeleOp(name = "ArmServoTester")
 public class ArmServoTester extends OpMode{
 
     private Servo leftl = null;
@@ -24,17 +25,18 @@ public class ArmServoTester extends OpMode{
         leftr = hardwareMap.get(Servo.class, "left_servo");
         //rightl = hardwareMap.get(Servo.class, "right_servo");
         //rightr = hardwareMap.get(Servo.class, "rightmost_servo");
-    }
 
-    @Override
-    public void start(){
-        leftl.setPosition(0.2);
-        leftr.setPosition(0.2);
+        //leftl.setDirection(Servo.Direction.REVERSE);
+        //leftl.setPosition(-0.1);
+        telemetry.addLine("leftl: " + leftl.getPosition() + "; leftr: " + leftr.getPosition());
+        //leftl.setPosition(0.40);
+        leftr.setPosition(-0.10);
+
     }
 
     @Override
     public void loop(){
-        if(gamepad1.a && !closed)
+        /*if(gamepad1.a && !closed)
         {
             telemetry.addLine("Left claw closed");
             leftl.setPosition(0.5);
@@ -47,6 +49,7 @@ public class ArmServoTester extends OpMode{
             leftl.setPosition(0.2);
             leftr.setPosition(0.2);
             closed = false;
-        }
+        }*/
+        telemetry.addLine("leftl: " + leftl.getPosition() + "; leftr: " + leftr.getPosition());
     }
 }
