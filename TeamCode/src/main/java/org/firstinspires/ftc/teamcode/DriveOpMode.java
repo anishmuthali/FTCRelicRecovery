@@ -51,8 +51,8 @@ public class DriveOpMode extends OpMode{
         double rightPower = 0;
 
         // Get data from controllers
-        leftPower = gamepad1.left_stick_y;
-        rightPower = gamepad1.right_stick_y;
+        leftPower = -gamepad1.left_stick_y;
+        rightPower = -gamepad1.right_stick_y;
 
         // Limit values of left and right power
         Range.clip(leftPower, -1.0, 1.0);
