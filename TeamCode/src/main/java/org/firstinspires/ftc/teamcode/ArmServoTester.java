@@ -21,21 +21,28 @@ public class ArmServoTester extends OpMode{
         telemetry.addData("Status", "Initialized");
 
         // Find motors on hardware map
-        leftl = hardwareMap.get(Servo.class, "leftmost_servo");
-        leftr = hardwareMap.get(Servo.class, "left_servo");
+        leftl = hardwareMap.get(Servo.class, "leftl");
+        leftr = hardwareMap.get(Servo.class, "leftr");
         //rightl = hardwareMap.get(Servo.class, "right_servo");
         //rightr = hardwareMap.get(Servo.class, "rightmost_servo");
 
-        //leftl.setDirection(Servo.Direction.REVERSE);
-        //leftl.setPosition(-0.1);
         telemetry.addLine("leftl: " + leftl.getPosition() + "; leftr: " + leftr.getPosition());
-        //leftl.setPosition(0.40);
-        leftr.setPosition(-0.10);
+
+
+        leftl.setPosition(0.8);
+        leftr.setDirection(Servo.Direction.REVERSE);
+        leftr.setPosition(1.0);
+        //rightl.setPosition(0.4);
+        //rightr.setPosition(0.5);
+
 
     }
 
     @Override
     public void loop(){
+        if(gamepad1.a){
+
+        }
         /*if(gamepad1.a && !closed)
         {
             telemetry.addLine("Left claw closed");
