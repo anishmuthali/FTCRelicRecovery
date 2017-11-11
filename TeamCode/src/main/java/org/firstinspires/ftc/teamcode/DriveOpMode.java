@@ -47,8 +47,8 @@ public class DriveOpMode extends OpMode{
 
     @Override
     public void loop() {
-        double leftPower = 0;
-        double rightPower = 0;
+        double leftPower;
+        double rightPower;
 
         // Get data from controllers
         leftPower = -gamepad1.left_stick_y;
