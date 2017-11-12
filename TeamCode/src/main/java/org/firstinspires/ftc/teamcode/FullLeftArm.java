@@ -22,7 +22,7 @@ public class FullLeftArm extends OpMode {
         leftArm.setPower(0.05);
 
         // initialize position of claw fingers
-        leftl.setPosition(0.735);
+        leftl.setPosition(0.745);
         leftr.setDirection(Servo.Direction.REVERSE);
         leftr.setPosition(0.585);
     }
@@ -35,7 +35,7 @@ public class FullLeftArm extends OpMode {
             // TODO: add space management code for the right arm
         }
         if(gamepad1.b){
-            leftl.setPosition(0.735);
+            leftl.setPosition(0.745);
             leftr.setPosition(0.585);
             // TODO: add space management code for the right arm
         }

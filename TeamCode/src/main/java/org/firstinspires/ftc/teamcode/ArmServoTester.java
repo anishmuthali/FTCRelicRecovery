@@ -29,9 +29,9 @@ public class ArmServoTester extends OpMode{
         telemetry.addLine("leftl: " + leftl.getPosition() + "; leftr: " + leftr.getPosition());
 
 
-        leftl.setPosition(0.735);
+        leftl.setPosition(0.75);
         leftr.setDirection(Servo.Direction.REVERSE);
-        leftr.setPosition(0.585);
+        leftr.setPosition(0.6);
         //rightl.setPosition(0.4);
         //rightr.setPosition(0.5);
 
@@ -45,8 +45,8 @@ public class ArmServoTester extends OpMode{
             leftr.setPosition(0.54);
         }
         if(gamepad1.b){
-            leftl.setPosition(0.735);
-            leftr.setPosition(0.585);
+            leftl.setPosition(0.75);
+            leftr.setPosition(0.6);
         }
         /*if(gamepad1.a && !closed)
         {
