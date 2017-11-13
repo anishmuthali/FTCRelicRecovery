@@ -44,7 +44,7 @@ public class JewelKnockerBlue extends LinearOpMode
         }
         catch (InterruptedException e)
         {
-
+            e.printStackTrace();
         }
         backLeft.setPower(0);
         backRight.setPower(0);
