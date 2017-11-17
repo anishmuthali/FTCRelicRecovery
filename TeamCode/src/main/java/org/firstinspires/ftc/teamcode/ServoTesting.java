@@ -12,6 +12,7 @@ public class ServoTesting extends OpMode {
     ElapsedTime runtime = new ElapsedTime();
     private Servo servo1 = null;
     boolean closed;
+    boolean pressed;
 
     @Override
     public void init() {
@@ -19,6 +20,7 @@ public class ServoTesting extends OpMode {
         servo1 = hardwareMap.get(Servo.class, "servo1");
         telemetry.addData("servo1", servo1.getPosition());
         closed = true;
+        pressed = false;
     }
 
     @Override
@@ -36,23 +38,40 @@ public class ServoTesting extends OpMode {
         //b = gamepad1.b;
 
 
-        if (a){
-            if(!closed)
+        if(pressed)
+        {
+            if(!a)
+                pressed = false;
+        }
+        else
+        {
+            if(a)
             {
-                servo1.setDirection(Servo.Direction.FORWARD);
-                servo1.setPosition(0.2);
-                closed = true;
-                telemetry.addLine("closed");
-            }
-            else
-            {
-                servo1.setDirection(Servo.Direction.REVERSE);
-                servo1.setPosition(0.2);
-                closed = false;
-                telemetry.addLine("opened");
+                if(!closed)
+                {
+                    servo1.setDirection(Servo.Direction.FORWARD);
+                    servo1.setPosition(0.2);
+                    closed = true;
+                    telemetry.addLine("closed");
+                }
+                else
+                {
+                    servo1.setDirection(Servo.Direction.REVERSE);
+                    servo1.setPosition(0.2);
+                    closed = false;
+                    telemetry.addLine("opened");
+                }
+                pressed = true;
             }
         }
-        /*else if (b){
+
+        /*if (a)
+        {
+                servo1.setDirection(Servo.Direction.FORWARD);
+                servo1.setPosition(0.2);
+        }
+        else if (b)
+        {
             servo1.setDirection(Servo.Direction.REVERSE);
             servo1.setPosition(0.2);
         }*/
