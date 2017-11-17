@@ -11,12 +11,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class ServoTesting extends OpMode {
     ElapsedTime runtime = new ElapsedTime();
     private Servo servo1 = null;
+    boolean closed;
 
     @Override
     public void init() {
         telemetry.addData("Status", "Initialized");
         servo1 = hardwareMap.get(Servo.class, "servo1");
         telemetry.addData("servo1", servo1.getPosition());
+        closed = true;
     }
 
     @Override
@@ -27,22 +29,33 @@ public class ServoTesting extends OpMode {
     @Override
     public void loop() {
         boolean a;
-        boolean b;
+        //boolean b;
 
 
         a = gamepad1.a;
-        b = gamepad1.b;
+        //b = gamepad1.b;
 
 
         if (a){
-            servo1.setDirection(Servo.Direction.FORWARD);
-            servo1.setPosition(0.2);
+            if(!closed)
+            {
+                servo1.setDirection(Servo.Direction.FORWARD);
+                servo1.setPosition(0.2);
+                closed = true;
+                telemetry.addLine("closed");
+            }
+            else
+            {
+                servo1.setDirection(Servo.Direction.REVERSE);
+                servo1.setPosition(0.2);
+                closed = false;
+                telemetry.addLine("opened");
+            }
         }
-
-        else if (b){
+        /*else if (b){
             servo1.setDirection(Servo.Direction.REVERSE);
             servo1.setPosition(0.2);
-        }
+        }*/
 
 
         telemetry.addData("servo1", servo1.getPosition());
