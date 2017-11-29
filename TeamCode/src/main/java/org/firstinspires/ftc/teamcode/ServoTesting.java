@@ -29,13 +29,10 @@ public class ServoTesting extends OpMode {
     }
 
     @Override
-    public void loop() {
+    public void loop()
+    {
         boolean a;
-        //boolean b;
-
-
         a = gamepad1.a;
-        //b = gamepad1.b;
 
 
         if(pressed)
@@ -64,19 +61,6 @@ public class ServoTesting extends OpMode {
                 pressed = true;
             }
         }
-
-        /*if (a)
-        {
-                servo1.setDirection(Servo.Direction.FORWARD);
-                servo1.setPosition(0.2);
-        }
-        else if (b)
-        {
-            servo1.setDirection(Servo.Direction.REVERSE);
-            servo1.setPosition(0.2);
-        }*/
-
-
         telemetry.addData("servo1", servo1.getPosition());
         telemetry.addData("runtime", getRuntime());
     }

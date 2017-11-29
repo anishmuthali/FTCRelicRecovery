@@ -11,10 +11,12 @@ import static com.sun.tools.doclint.Entity.le;
  * Created by anish on 11/10/2017.
  */
 @TeleOp(name = "FullLeftArm",  group="OpMode")
-public class FullLeftArm extends OpMode {
+public class FullLeftArm extends OpMode
+{
     DcMotor leftArm = null;
     Servo leftl = null;
     Servo leftr = null;
+    boolean pressed;
     int currentPos = 0;
 
     @Override
@@ -32,7 +34,8 @@ public class FullLeftArm extends OpMode {
     }
 
     @Override
-    public void loop() {
+    public void loop()
+    {
         if(gamepad1.a){
             leftl.setPosition(0.69);
             leftr.setPosition(0.54);
@@ -50,41 +53,55 @@ public class FullLeftArm extends OpMode {
         float triggerValue = gamepad1.left_trigger;
         telemetry.addLine("left_trigger: " + gamepad1.left_trigger);
         // if L1 is held down, move the arm up
-        if(on){
+        if(on)
+        {
             telemetry.addLine("Arm moving up");
             leftArm.setPower(0.5);
         }
         // if L2 is held, drop the arm down
-        else if(triggerValue > 0.0){
+        else if(triggerValue > 0.0)
+        {
             leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             leftArm.setPower(0);
         }
         // if L1 is not held, keep the arm in place. provide enough power that the arm doesn't move up or down
-        else{
+        else
+        {
             leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             leftArm.setPower(0);
         }
 
         //presets for the left arm
-        if(gamepad1.dpad_down)
+        if(pressed)
         {
-            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftArm.setTargetPosition(0);
+            if(!gamepad1.dpad_down || !gamepad1.dpad_up || !gamepad1.dpad_left || !gamepad1.dpad_right)
+                pressed = false;
         }
-        else if(gamepad1.dpad_left)
+        else
         {
-            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftArm.setTargetPosition(0);
+                if(gamepad1.dpad_down)
+                {
+                    leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    leftArm.setTargetPosition(0);
+                }
+                else if(gamepad1.dpad_left)
+                {
+                    leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    leftArm.setTargetPosition(0);
+                }
+                else if(gamepad1.dpad_right)
+                {
+                    leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    leftArm.setTargetPosition(0);
+                }
+                else if(gamepad1.dpad_up)
+                {
+                    leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    leftArm.setTargetPosition(0);
+                }
+                    telemetry.addLine("opened");
+                }
+                pressed = true;
         }
-        else if(gamepad1.dpad_right)
-        {
-            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftArm.setTargetPosition(0);
-        }
-        else if(gamepad1.dpad_up)
-        {
-            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftArm.setTargetPosition(0);
-        }
+
     }
-}
