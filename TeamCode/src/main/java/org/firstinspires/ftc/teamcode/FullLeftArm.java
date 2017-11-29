@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import static com.sun.tools.doclint.Entity.le;
+
 /**
  * Created by anish on 11/10/2017.
  */
@@ -13,6 +15,8 @@ public class FullLeftArm extends OpMode {
     DcMotor leftArm = null;
     Servo leftl = null;
     Servo leftr = null;
+    int currentPos = 0;
+
     @Override
     public void init() {
         leftArm = hardwareMap.get(DcMotor.class,"leftArm");
@@ -45,7 +49,6 @@ public class FullLeftArm extends OpMode {
         // check if L2 is held down
         float triggerValue = gamepad1.left_trigger;
         telemetry.addLine("left_trigger: " + gamepad1.left_trigger);
-
         // if L1 is held down, move the arm up
         if(on){
             telemetry.addLine("Arm moving up");
@@ -61,7 +64,27 @@ public class FullLeftArm extends OpMode {
             leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             leftArm.setPower(0);
         }
+
+        //presets for the left arm
+        if(gamepad1.dpad_down)
+        {
+            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftArm.setTargetPosition(0);
+        }
+        else if(gamepad1.dpad_left)
+        {
+            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftArm.setTargetPosition(0);
+        }
+        else if(gamepad1.dpad_right)
+        {
+            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftArm.setTargetPosition(0);
+        }
+        else if(gamepad1.dpad_up)
+        {
+            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftArm.setTargetPosition(0);
+        }
     }
-
-
 }
