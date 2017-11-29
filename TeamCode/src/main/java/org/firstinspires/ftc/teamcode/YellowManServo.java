@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@TeleOp(name="ServoTesting", group="OpMode")
-//@Disabled
-public class ServoTesting extends OpMode {
+/**
+ * Created by Alex on 11/28/2017.
+ */
+public class YellowManServo extends OpMode{
     ElapsedTime runtime = new ElapsedTime();
     private Servo servo1 = null;
     boolean closed;
@@ -65,3 +65,4 @@ public class ServoTesting extends OpMode {
         telemetry.addData("runtime", getRuntime());
     }
 }
+

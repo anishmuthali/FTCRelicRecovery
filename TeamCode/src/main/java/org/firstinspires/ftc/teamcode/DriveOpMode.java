@@ -53,11 +53,13 @@ public class DriveOpMode extends OpMode{
         // Get data from controllers
         leftPower = -gamepad1.left_stick_y;
         rightPower = -gamepad1.right_stick_y;
-
+/*
         // Limit values of left and right power
         Range.clip(leftPower, -1.0, 1.0);
         Range.clip(rightPower, -1.0, 1.0);
-
+        (Commented by Alex on 11/28)
+        (Reason: Don't know what it's for!)
+*/
         // Set power of all motors
         frontLeft.setPower(leftPower);
         backLeft.setPower(leftPower);
@@ -66,6 +68,6 @@ public class DriveOpMode extends OpMode{
         backRight.setPower(rightPower);
 
         telemetry.addData("Motors", ("left: " + leftPower + "right: " + rightPower));
-        telemetry.addData("runtime", getRuntime());
+        telemetry.addData("Runtime:", getRuntime());
     }
 }
