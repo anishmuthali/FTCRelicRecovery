@@ -16,14 +16,15 @@ public class FullLeftArm extends OpMode
     DcMotor leftArm;
     Servo leftl;
     Servo leftr;
-    final int UP = 0;
+    final int UP = 1000;
     final int DOWN = 0;
     final int LEFT = 0;
     final int RIGHT = 0;
     final int initial_position=0;
 
     @Override
-    public void init() {
+    public void init()
+    {
         leftArm = hardwareMap.get(DcMotor.class,"leftArm");
         leftl = hardwareMap.get(Servo.class, "leftl");
         leftr = hardwareMap.get(Servo.class, "leftr");
@@ -35,10 +36,15 @@ public class FullLeftArm extends OpMode
         leftl.setPosition(0.745);
         leftr.setDirection(Servo.Direction.REVERSE);
         leftr.setPosition(0.585);
+
+        leftArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     @Override
-    public void loop() {
+    public void loop()
+    {
+        leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         /*
         This part is for manual control for the arm, which means the driver can set the power of the arm motor himself.
          */
@@ -60,16 +66,19 @@ public class FullLeftArm extends OpMode
         telemetry.addLine("left_trigger: " + gamepad1.left_trigger);
         // if L1 is held down, move the arm up
         if (on) {
+            leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             telemetry.addLine("Arm moving up");
             leftArm.setPower(0.5);
         }
         // if L2 is held, drop the arm down
         else if (triggerValue > 0.0) {
+            leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             leftArm.setPower(0);
         }
         // if L1 is not held, keep the arm in place. provide enough power that the arm doesn't move up or down
         else {
+            leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             leftArm.setPower(0);
         }
@@ -84,15 +93,19 @@ public class FullLeftArm extends OpMode
          */
         if (gamepad1.dpad_down) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftArm.setPower(0.5);
             leftArm.setTargetPosition(DOWN);
         } else if (gamepad1.dpad_left) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftArm.setPower(0.5);
             leftArm.setTargetPosition(LEFT);
         } else if (gamepad1.dpad_right) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftArm.setPower(0.5);
             leftArm.setTargetPosition(RIGHT);
         } else if (gamepad1.dpad_up) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftArm.setPower(0.5);
             leftArm.setTargetPosition(UP);
         }
     }
