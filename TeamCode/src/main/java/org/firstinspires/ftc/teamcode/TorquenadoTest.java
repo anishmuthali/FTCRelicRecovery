@@ -46,5 +46,6 @@ public class TorquenadoTest extends OpMode{
 
 
         // TODO: create presets for different rows of the glyph tower (use dpad buttons)
+        //TODO: Try to get the parameters for the different level of glyph
     }
 }
