@@ -14,29 +14,37 @@ import static com.sun.tools.doclint.Entity.le;
 public class FullLeftArm extends OpMode
 {
     DcMotor leftArm;
+    //initiating the two servos on the left arm claw. leftl is the left servo and leftr is the right servp.
     Servo leftl;
     Servo leftr;
+
+    //initiating the presets parameter of the position of the arm motor
+    //TODO: getting the initial parameters of the position of the motor
+    final int initial_position=0;
     final int UP = 1000;
     final int DOWN = 0;
     final int LEFT = 0;
     final int RIGHT = 0;
-    final int initial_position=0;
+
 
     @Override
     public void init()
     {
+        //declaring the servos and motors to be objects
         leftArm = hardwareMap.get(DcMotor.class,"leftArm");
         leftl = hardwareMap.get(Servo.class, "leftl");
         leftr = hardwareMap.get(Servo.class, "leftr");
 
-        //initislize the position of the arm
+        //initialize the position of the arm
         leftArm.setTargetPosition(initial_position);
 
         // initialize position of claw fingers
+        //TODO: getting the initial parameters of the position of servos on the claw
         leftl.setPosition(0.745);
         leftr.setDirection(Servo.Direction.REVERSE);
         leftr.setPosition(0.585);
 
+        // reset the position of the motor encoder
         leftArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
