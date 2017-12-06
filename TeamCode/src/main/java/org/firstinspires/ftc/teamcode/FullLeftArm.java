@@ -20,6 +20,7 @@ public class FullLeftArm extends OpMode
 
     //initiating the presets parameter of the position of the arm motor
     //TODO: getting the initial parameters of the position of the motor
+    //TODO: rename the postion int. Instead if "UP", try to use "glyph1" or similar names
     final int initial_position=0;
     final int UP = 1000;
     final int DOWN = 0;
@@ -46,6 +47,9 @@ public class FullLeftArm extends OpMode
 
         // reset the position of the motor encoder
         leftArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //resetting telemery data
+        telemetry.clearAll();
     }
 
     @Override
@@ -66,29 +70,33 @@ public class FullLeftArm extends OpMode
             leftr.setPosition(0.585);
             // TODO: add space management code for the right arm
         }
-        // check if L1 is held down
+        // check if left bumper is pressed to move the arm up
         boolean on = gamepad1.left_bumper;
 
-        // check if L2 is held down
+        // check if left trigger is held down to move the arm down
         float triggerValue = gamepad1.left_trigger;
         telemetry.addLine("left_trigger: " + gamepad1.left_trigger);
-        // if L1 is held down, move the arm up
+
+        // if left bumper is pressed, move the arm up
         if (on) {
             leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            telemetry.addLine("Arm moving up");
             leftArm.setPower(0.5);
+            telemetry.addLine("Arm moving up");
         }
-        // if L2 is held, drop the arm down
+        // if left trigger is pressed, drop the arm down
         else if (triggerValue > 0.0) {
             leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             leftArm.setPower(0);
+            telemetry.addLine("Arm moving down");
         }
-        // if L1 is not held, keep the arm in place. provide enough power that the arm doesn't move up or down
+        // if nothing is pressed, keep the arm in place. provide enough power that the arm doesn't move up or down
         else {
             leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             leftArm.setPower(0);
+            telemetry.addLine("Arm moving down");
+
         }
 
 
@@ -99,22 +107,27 @@ public class FullLeftArm extends OpMode
         /*
         presets for the left arm
          */
+        //TODO: testing whether 0.5 is the proper moving speed of the object
         if (gamepad1.dpad_down) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftArm.setPower(0.5);
             leftArm.setTargetPosition(DOWN);
+            telemetry.addLine("Down");
         } else if (gamepad1.dpad_left) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftArm.setPower(0.5);
             leftArm.setTargetPosition(LEFT);
+            telemetry.addLine("Left");
         } else if (gamepad1.dpad_right) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftArm.setPower(0.5);
             leftArm.setTargetPosition(RIGHT);
+            telemetry.addLine("Right");
         } else if (gamepad1.dpad_up) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftArm.setPower(0.5);
             leftArm.setTargetPosition(UP);
+            telemetry.addLine("Up");
         }
     }
 }
