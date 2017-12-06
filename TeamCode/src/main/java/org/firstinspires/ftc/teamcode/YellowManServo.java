@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Created by Alex on 11/28/2017.
  */
+//getting the servo on the claw to grab the yellow man
 public class YellowManServo extends OpMode{
     ElapsedTime runtime = new ElapsedTime();
     private Servo servo1 = null;
@@ -46,6 +47,7 @@ public class YellowManServo extends OpMode{
             {
                 if(!closed)
                 {
+                    //closing the servo
                     servo1.setDirection(Servo.Direction.FORWARD);
                     servo1.setPosition(0.2);
                     closed = true;
@@ -53,6 +55,7 @@ public class YellowManServo extends OpMode{
                 }
                 else
                 {
+                    //opening the servo
                     servo1.setDirection(Servo.Direction.REVERSE);
                     servo1.setPosition(0.2);
                     closed = false;
