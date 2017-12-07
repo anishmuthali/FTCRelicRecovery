@@ -5,11 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /**
  * Created by anishmuthali on 9/27/17.
  */
-@TeleOp(name="TestBaseOpMode", group="OpMode")
+@TeleOp(name="DriveOpMode", group="OpMode")
 //@Disabled
 public class DriveOpMode extends OpMode{
     ElapsedTime runtime = new ElapsedTime();

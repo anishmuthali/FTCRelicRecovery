@@ -5,12 +5,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 
 /**
  * Created by Nitin on 10/29/2017.
+ * Disabled by Alex on 12/06/2017
  */
-@Autonomous
+@Autonomous(name = "Glyphlifter", group = "Autonomous")
+@Disabled
 public class Glyphlifter extends LinearOpMode
 {
     private DcMotor frontLeft = null;
@@ -33,6 +36,9 @@ public class Glyphlifter extends LinearOpMode
         backRight = hardwareMap.get(DcMotor.class, "back_right");
         armLeft = hardwareMap.get(DcMotor.class, "arm_left");
         armRight = hardwareMap.get(DcMotor.class, "arm_right");
+
+
+
         leftl = hardwareMap.get(Servo.class, "left1");
         leftr = hardwareMap.get(Servo.class, "left2");
         rightl = hardwareMap.get(Servo.class, "right1");
@@ -43,17 +49,17 @@ public class Glyphlifter extends LinearOpMode
         rightl.setPosition(0.2);
         rightr.setPosition(0.2);
 
-        //set the directions
+        //set the directions of the motors
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
         armLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         armRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeft.setPower(1);
-        backLeft.setPower(1);
-        frontRight.setPower(1);
-        backRight.setPower(1);
+        frontLeft.setPower(0.5);
+        backLeft.setPower(0.5);
+        frontRight.setPower(0.5);
+        backRight.setPower(0.5);
         Thread.sleep(500);
         frontLeft.setPower(0);
         backLeft.setPower(0);

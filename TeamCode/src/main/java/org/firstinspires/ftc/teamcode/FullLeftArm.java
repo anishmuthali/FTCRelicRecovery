@@ -4,23 +4,24 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import static com.sun.tools.doclint.Entity.le;
 
 /**
  * Created by anish on 11/10/2017.
  */
 @TeleOp(name = "FullLeftArm",  group="OpMode")
+//@Disabled
 public class FullLeftArm extends OpMode
 {
     DcMotor leftArm;
-    //initiating the two servos on the left arm claw. leftl is the left servo and leftr is the right servp.
+    //initiating the two servos on the left arm claw. leftl is the left servo and leftr is the right servo.
     Servo leftl;
     Servo leftr;
 
     //initiating the presets parameter of the position of the arm motor
     //TODO: getting the initial parameters of the position of the motor
-    //TODO: rename the postion int. Instead if "UP", try to use "glyph1" or similar names
+    //TODO: rename the position int. Instead if "UP", try to use "glyph1" or similar names
     final int initial_position=0;
     final int UP = 1000;
     final int DOWN = 0;
@@ -48,7 +49,7 @@ public class FullLeftArm extends OpMode
         // reset the position of the motor encoder
         leftArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        //resetting telemery data
+        //resetting telemetry data
         telemetry.clearAll();
     }
 

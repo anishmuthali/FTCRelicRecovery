@@ -3,12 +3,17 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /**
  * Created by anish on 10/29/2017.
  */
+//TODO: Try to get the parameters for the different level of glyph
+//COMPLETED: create presets for different rows of the glyph tower (use dpad buttons)
+
 
 @TeleOp(name="ArmMovementTest", group="OpMode")
+//@Disabled
 public class TorquenadoTest extends OpMode{
 
     private DcMotor test = null;
@@ -43,9 +48,5 @@ public class TorquenadoTest extends OpMode{
             test.setPower(0);
         }
 
-
-
-        // TODO: create presets for different rows of the glyph tower (use dpad buttons)
-        //TODO: Try to get the parameters for the different level of glyph
     }
 }
