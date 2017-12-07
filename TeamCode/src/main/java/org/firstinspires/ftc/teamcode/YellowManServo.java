@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 /**
  * Created by Alex on 11/28/2017.
  */
+
+//TODO: Nitin, plz comment this when you're free. I've done the comments for basically all the other classes. Remember to be specific and includes the algorithm and methodology.
 //getting the servo on the claw to grab the yellow man
 @TeleOp(name="YellowManServo", group="OpMode")
 //@Disabled
