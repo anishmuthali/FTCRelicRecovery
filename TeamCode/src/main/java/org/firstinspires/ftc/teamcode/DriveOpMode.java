@@ -33,12 +33,13 @@ public class DriveOpMode extends OpMode{
         * Set direction of motors
         * Right: reversed
         * Left: forward (normal)
+        * (reversed on 12/7)
         */
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        backLeft.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
     }
 
     @Override
@@ -52,8 +53,8 @@ public class DriveOpMode extends OpMode{
         double rightPower;
 
         // Get data from controllers
-        leftPower = -gamepad1.left_stick_y;
-        rightPower = -gamepad1.right_stick_y;
+        leftPower = -0.8*(gamepad1.left_stick_y);
+        rightPower = -0.8*(gamepad1.right_stick_y);
 /*
         // Limit values of left and right power
         Range.clip(leftPower, -1.0, 1.0);
