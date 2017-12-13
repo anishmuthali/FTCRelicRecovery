@@ -23,9 +23,9 @@ public class FullLeftArm extends OpMode
     //TODO: getting the initial parameters of the position of the motor
     //TODO: rename the position int. Instead if "UP", try to use "glyph1" or similar names
     final int initial_position=10;
-    final double posleftl=0.85;
-    final double posleftr=0.61;
-    final double closevalue =0.15;
+    final double pos_leftl=0.85;
+    final double pos_leftr=0.61;
+    final double close_value =0.15;
     final int UP = 1440;
     final int DOWN = 0;
     final int LEFT = 500;
@@ -45,9 +45,9 @@ public class FullLeftArm extends OpMode
 
         // initialize position of claw fingers
         //TODO: getting the initial parameters of the position of servos on the claw
-        leftl.setPosition(posleftl);
+        leftl.setPosition(pos_leftl);
         leftr.setDirection(Servo.Direction.REVERSE);
-        leftr.setPosition(posleftr);
+        leftr.setPosition(pos_leftr);
 
         // reset the position of the motor encoder
         leftArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -64,13 +64,13 @@ public class FullLeftArm extends OpMode
         This part is for manual control for the arm, which means the driver can set the power of the arm motor himself.
          */
         if (gamepad1.a) {
-            leftl.setPosition(posleftl - closevalue);
-            leftr.setPosition(posleftr - closevalue);
+            leftl.setPosition(pos_leftl - close_value);
+            leftr.setPosition(pos_leftr - close_value);
             // TODO: add space management code for the right arm
         }
         else if (gamepad1.b) {
-            leftl.setPosition(posleftl);
-            leftr.setPosition(posleftr);
+            leftl.setPosition(pos_leftl);
+            leftr.setPosition(pos_leftr);
             // TODO: add space management code for the right arm
         }
 
@@ -97,7 +97,9 @@ public class FullLeftArm extends OpMode
             telemetry.addLine("Arm moving down");
         }
         // if nothing is pressed, keep the arm in place. provide enough power that the arm doesn't move up or down
+        // Noted: supply positive number first so the arms won't slide
         else {
+            leftArm.setPower(0.05);
             leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             telemetry.addLine("Arm stopped");
         }
