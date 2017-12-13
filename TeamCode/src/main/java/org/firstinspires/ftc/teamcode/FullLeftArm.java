@@ -23,10 +23,14 @@ public class FullLeftArm extends OpMode
     //TODO: getting the initial parameters of the position of the motor
     //TODO: rename the position int. Instead if "UP", try to use "glyph1" or similar names
     final int initial_position=0;
+    final double posleftl=0.85;
+    final double posleftr=0.61;
+    final double closevalue =0.15;
     final int UP = 1000;
     final int DOWN = 0;
-    final int LEFT = 0;
-    final int RIGHT = 0;
+    final int LEFT = 500;
+    final int RIGHT = 1440;
+    boolean closed = false;
 
 
     @Override
@@ -42,9 +46,9 @@ public class FullLeftArm extends OpMode
 
         // initialize position of claw fingers
         //TODO: getting the initial parameters of the position of servos on the claw
-        leftl.setPosition(0.745);
+        leftl.setPosition(posleftl);
         leftr.setDirection(Servo.Direction.REVERSE);
-        leftr.setPosition(0.585);
+        leftr.setPosition(posleftr);
 
         // reset the position of the motor encoder
         leftArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -56,26 +60,28 @@ public class FullLeftArm extends OpMode
     @Override
     public void loop()
     {
-        leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         /*
         This part is for manual control for the arm, which means the driver can set the power of the arm motor himself.
          */
         if (gamepad1.a) {
-            leftl.setPosition(0.70);
-            leftr.setPosition(0.54);
+            leftl.setPosition(posleftl - closevalue);
+            leftr.setPosition(posleftr - closevalue);
+            closed = true;
             // TODO: add space management code for the right arm
         }
-        if (gamepad1.b) {
-            leftl.setPosition(0.745);
-            leftr.setPosition(0.585);
+        else if (gamepad1.b) {
+            leftl.setPosition(posleftl);
+            leftr.setPosition(posleftr);
+            closed = false;
             // TODO: add space management code for the right arm
         }
         // check if left bumper is pressed to move the arm up
         boolean on = gamepad1.left_bumper;
+        telemetry.addData("left_bumper:",gamepad1.left_bumper);
 
         // check if left trigger is held down to move the arm down
-        float triggerValue = gamepad1.left_trigger;
+        double triggerValue = gamepad1.left_trigger;
         telemetry.addLine("left_trigger: " + gamepad1.left_trigger);
 
         // if left bumper is pressed, move the arm up
@@ -87,16 +93,24 @@ public class FullLeftArm extends OpMode
         // if left trigger is pressed, drop the arm down
         else if (triggerValue > 0.0) {
             leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            leftArm.setPower(0);
+            leftArm.setPower(-0.05);
             telemetry.addLine("Arm moving down");
         }
         // if nothing is pressed, keep the arm in place. provide enough power that the arm doesn't move up or down
         else {
             leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            leftArm.setPower(0);
-            telemetry.addLine("Arm moving down");
+            if(!closed)
+            {
+                leftArm.setPower(0.07);
+                leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+            }
+            else
+            {
+                leftArm.setPower(0.1);
+                leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
+            telemetry.addLine("Arm stopped");
 
         }
 
@@ -111,24 +125,28 @@ public class FullLeftArm extends OpMode
         //TODO: testing whether 0.5 is the proper moving speed of the object
         if (gamepad1.dpad_down) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftArm.setPower(0.5);
+            leftArm.setPower(0.3);
             leftArm.setTargetPosition(DOWN);
             telemetry.addLine("Down");
         } else if (gamepad1.dpad_left) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftArm.setPower(0.5);
+            leftArm.setPower(0.3);
             leftArm.setTargetPosition(LEFT);
             telemetry.addLine("Left");
         } else if (gamepad1.dpad_right) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftArm.setPower(0.5);
+            leftArm.setPower(0.3);
             leftArm.setTargetPosition(RIGHT);
             telemetry.addLine("Right");
         } else if (gamepad1.dpad_up) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftArm.setPower(0.5);
+            leftArm.setPower(0.3);
             leftArm.setTargetPosition(UP);
             telemetry.addLine("Up");
         }
+
+        telemetry.addData("leftl",leftl.getPosition());
+        telemetry.addData("leftr",leftr.getPosition());
+
     }
 }
