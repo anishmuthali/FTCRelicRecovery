@@ -22,16 +22,14 @@ public class FullLeftArm extends OpMode
     //initiating the presets parameter of the position of the arm motor
     //TODO: getting the initial parameters of the position of the motor
     //TODO: rename the position int. Instead if "UP", try to use "glyph1" or similar names
-    final int initial_position=0;
+    final int initial_position=10;
     final double posleftl=0.85;
     final double posleftr=0.61;
     final double closevalue =0.15;
-    final int UP = 1000;
+    final int UP = 1440;
     final int DOWN = 0;
     final int LEFT = 500;
-    final int RIGHT = 1440;
-    boolean closed = false;
-
+    final int RIGHT = 1000;
 
     @Override
     public void init()
@@ -42,6 +40,7 @@ public class FullLeftArm extends OpMode
         leftr = hardwareMap.get(Servo.class, "leftr");
 
         //initialize the position of the arm
+        leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftArm.setTargetPosition(initial_position);
 
         // initialize position of claw fingers
@@ -67,22 +66,23 @@ public class FullLeftArm extends OpMode
         if (gamepad1.a) {
             leftl.setPosition(posleftl - closevalue);
             leftr.setPosition(posleftr - closevalue);
-            closed = true;
             // TODO: add space management code for the right arm
         }
         else if (gamepad1.b) {
             leftl.setPosition(posleftl);
             leftr.setPosition(posleftr);
-            closed = false;
             // TODO: add space management code for the right arm
         }
+
+
         // check if left bumper is pressed to move the arm up
         boolean on = gamepad1.left_bumper;
         telemetry.addData("left_bumper:",gamepad1.left_bumper);
-
+        
         // check if left trigger is held down to move the arm down
         double triggerValue = gamepad1.left_trigger;
         telemetry.addLine("left_trigger: " + gamepad1.left_trigger);
+
 
         // if left bumper is pressed, move the arm up
         if (on) {
@@ -97,19 +97,9 @@ public class FullLeftArm extends OpMode
             telemetry.addLine("Arm moving down");
         }
         // if nothing is pressed, keep the arm in place. provide enough power that the arm doesn't move up or down
-        else {
-            leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            if(!closed)
-            {
-                leftArm.setPower(0.07);
-                leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-            }
-            else
-            {
-                leftArm.setPower(0.1);
-                leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            }
+        else
+        {
+            leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             telemetry.addLine("Arm stopped");
 
         }
@@ -145,8 +135,9 @@ public class FullLeftArm extends OpMode
             telemetry.addLine("Up");
         }
 
-        telemetry.addData("leftl",leftl.getPosition());
-        telemetry.addData("leftr",leftr.getPosition());
+        telemetry.addData("leftArm: ",leftArm.getCurrentPosition());
+        telemetry.addData("leftl: ",leftl.getPosition());
+        telemetry.addData("leftr: ",leftr.getPosition());
 
     }
 }
