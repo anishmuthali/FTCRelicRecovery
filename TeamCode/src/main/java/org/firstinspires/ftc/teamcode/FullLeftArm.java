@@ -78,7 +78,7 @@ public class FullLeftArm extends OpMode
         // check if left bumper is pressed to move the arm up
         boolean on = gamepad1.left_bumper;
         telemetry.addData("left_bumper:",gamepad1.left_bumper);
-        
+
         // check if left trigger is held down to move the arm down
         double triggerValue = gamepad1.left_trigger;
         telemetry.addLine("left_trigger: " + gamepad1.left_trigger);
@@ -97,11 +97,9 @@ public class FullLeftArm extends OpMode
             telemetry.addLine("Arm moving down");
         }
         // if nothing is pressed, keep the arm in place. provide enough power that the arm doesn't move up or down
-        else
-        {
+        else {
             leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             telemetry.addLine("Arm stopped");
-
         }
 
 
