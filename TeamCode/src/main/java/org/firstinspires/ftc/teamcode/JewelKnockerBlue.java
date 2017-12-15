@@ -30,10 +30,9 @@ public class JewelKnockerBlue extends LinearOpMode
 
         servoUpDown.setPosition(0.8);
         //servoSide.setPosition(0.8);
-        //TODO: The algorithm here is incomplete. Finish this after the manual part.
 
-        //If the color sensor detects blue, turn the servo in the direction it faces.
-        // If not, turn it in the opposite direction.
+
+
         /*
         if (colorsensor.blue() > colorsensor.red()) {
             servoSide.setPosition(0.2);

@@ -92,15 +92,13 @@ public class FullLeftArm extends OpMode
         }
         // if left trigger is pressed, drop the arm down
         else if (triggerValue > 0.0) {
-            leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            leftArm.setPower(-0.05);
+            leftArm.setPower(-0.01);
             telemetry.addLine("Arm moving down");
         }
         // if nothing is pressed, keep the arm in place. provide enough power that the arm doesn't move up or down
         // Noted: supply positive number first so the arms won't slide
         else {
-            leftArm.setPower(0.05);
-            leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            leftArm.setPower(0.2);
             telemetry.addLine("Arm stopped");
         }
 
