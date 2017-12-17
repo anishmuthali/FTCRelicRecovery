@@ -23,6 +23,7 @@ public class DriveOpMode extends OpMode{
     public void init() {
         telemetry.addData("Status", "Initialized");
 
+
         // Find motors on hardware map
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
         frontRight = hardwareMap.get(DcMotor.class, "front_right");
@@ -49,6 +50,7 @@ public class DriveOpMode extends OpMode{
 
     @Override
     public void loop() {
+
         double leftPower;
         double rightPower;
 

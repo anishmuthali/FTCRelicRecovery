@@ -11,7 +11,7 @@ import static com.sun.tools.doclint.Entity.le;
  * Created by anish on 11/10/2017.
  */
 @TeleOp(name = "FullLeftArm",  group="OpMode")
-//@Disabled
+@Disabled
 public class FullLeftArm extends OpMode
 {
     DcMotor leftArm;
