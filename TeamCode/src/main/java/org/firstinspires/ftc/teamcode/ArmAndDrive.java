@@ -23,21 +23,21 @@ public class ArmAndDrive extends OpMode{
     private Servo leftr = null;
     private Servo rightl = null;
     private Servo rightr = null;
-    final int l_initial_position=-970;
-    final int r_initial_position=100;
-    final double lpos_l=0.75;
-    final double lpos_r=0.61;
+    final int l_initial_position=156;
+    final int r_initial_position=130;
+    final double lpos_l=0.72;
+    final double lpos_r=0.58;
     final double rpos_l=0.5;
     final double rpos_r=0.65;
     final double close_value =0.13;
     final int lUP = 1440;
-    final int lDOWN = -950;
-    final int lLEFT = 500;
+    final int lDOWN = 156;
+    final int lLEFT = 639;
     final int lRIGHT = 1000;
-    final int rUP = 1440;
+    final int rUP = 982;
     final int rDOWN = 130;
-    final int rLEFT = 500;
-    final int rRIGHT = 1000;
+    final int rLEFT = 482;
+    final int rRIGHT = 727;
     //------------------------------------------------------------------------------------
     //Objects for Wheels
     private DcMotor frontLeft = null;
@@ -116,8 +116,8 @@ public class ArmAndDrive extends OpMode{
         double rightPower;
 
         // Get data from controllers
-        leftPower = -0.8*(gamepad1.left_stick_y);
-        rightPower = -0.8*(gamepad1.right_stick_y);
+        leftPower = -0.4*(gamepad1.right_stick_y);
+        rightPower = -0.4*(gamepad1.left_stick_y);
 /*
         // Limit values of left and right power
         Range.clip(leftPower, -1.0, 1.0);
