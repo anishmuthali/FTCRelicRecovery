@@ -5,8 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+//import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /**
  * Created by Alex Yang on 9/27/17.
@@ -23,21 +22,25 @@ public class ArmAndDrive extends OpMode{
     private Servo leftr = null;
     private Servo rightl = null;
     private Servo rightr = null;
-    final int l_initial_position=156;
-    final int r_initial_position=130;
+    final int l_initial_position=165;
+    final int r_initial_position=140;
     final double lpos_l=0.72;
     final double lpos_r=0.58;
     final double rpos_l=0.5;
     final double rpos_r=0.65;
     final double close_value =0.13;
     final int lUP = 1440;
-    final int lDOWN = 156;
+    final int lDOWN = 165;
     final int lLEFT = 639;
     final int lRIGHT = 1000;
     final int rUP = 982;
-    final int rDOWN = 130;
+    final int rDOWN = 140;
     final int rLEFT = 482;
     final int rRIGHT = 727;
+    private boolean slowMode = false;
+    private boolean normalMode = true;
+    private boolean fastMode = false;
+    private boolean TURBOMODE = false;
     //------------------------------------------------------------------------------------
     //Objects for Wheels
     private DcMotor frontLeft = null;
@@ -112,12 +115,63 @@ public class ArmAndDrive extends OpMode{
         Code for Wheels
          */
 
-        double leftPower;
-        double rightPower;
+        double leftPower = -0.30 * (gamepad1.right_stick_y);
+        double rightPower = -0.30 * (gamepad1.left_stick_y);
+
+
+        // Set speed of motor
+        if (gamepad1.b){
+            slowMode = false;
+            normalMode = false;
+            fastMode = true;
+            TURBOMODE = false;
+        }
+        else if(gamepad1.a){
+            slowMode = false;
+            normalMode = false;
+            fastMode = false;
+            TURBOMODE = true;
+        }
+        else if(gamepad1.dpad_right) {
+            slowMode = true;
+            normalMode = false;
+            fastMode = false;
+            TURBOMODE = false;
+        }
+        else if(gamepad1.dpad_down){
+            slowMode = false;
+            normalMode = true;
+            fastMode = false;
+            TURBOMODE = false;
+        }
+
+
 
         // Get data from controllers
-        leftPower = -0.4*(gamepad1.right_stick_y);
-        rightPower = -0.4*(gamepad1.left_stick_y);
+        if(slowMode)
+        {
+            leftPower = -0.175 * (gamepad1.right_stick_y);
+            rightPower = -0.175 * (gamepad1.left_stick_y);
+            telemetry.addLine("Slow Mode");
+        }
+        else if(normalMode) {
+            leftPower = -0.30 * (gamepad1.right_stick_y);
+            rightPower = -0.30 * (gamepad1.left_stick_y);
+            telemetry.addLine("Normal Mode");
+        }
+        else if(fastMode)
+        {
+            leftPower = -0.50 * (gamepad1.right_stick_y);
+            rightPower = -0.50 * (gamepad1.left_stick_y);
+            telemetry.addLine("Fast Mode");
+        }
+        else if(TURBOMODE)
+        {
+            leftPower = -0.75 * (gamepad1.right_stick_y);
+            rightPower = -0.75 * (gamepad1.left_stick_y);
+            telemetry.addLine("TURBO!!!!");
+        }
+
 /*
         // Limit values of left and right power
         Range.clip(leftPower, -1.0, 1.0);
@@ -142,28 +196,28 @@ public class ArmAndDrive extends OpMode{
          /*
         This part is for manual control for the arm, which means the driver can set the power of the arm motor himself.
          */
-        if (gamepad1.a) {
+        if (gamepad2.a) {
             leftl.setPosition(lpos_l - close_value);
             leftr.setPosition(lpos_r - close_value);
             // COMPLETED: add space management code for the right arm
-        } else if (gamepad1.b) {
+        } else if (gamepad2.b) {
             leftl.setPosition(lpos_l);
             leftr.setPosition(lpos_r);
             // COMPLETED: add space management code for the right arm
-        }if (gamepad1.x) {
+        }if (gamepad2.x) {
             rightl.setPosition(rpos_l - close_value);
             rightr.setPosition(rpos_r - close_value);
             // COMPLETED: add space management code for the right arm
-        } else if (gamepad1.y) {
+        } else if (gamepad2.y) {
             rightl.setPosition(rpos_l);
             rightr.setPosition(rpos_r);
             // COMPLETED: add space management code for the right arm
         }
 
-        boolean left_on = gamepad1.left_bumper;
-        double left_triggerValue = gamepad1.left_trigger;
-        boolean right_on = gamepad1.right_bumper;
-        double right_triggerValue = gamepad1.right_trigger;
+        boolean left_on = gamepad2.left_bumper;
+        double left_triggerValue = gamepad2.left_trigger;
+        boolean right_on = gamepad2.right_bumper;
+        double right_triggerValue = gamepad2.right_trigger;
 
         // if left bumper is pressed, move the arm up
         if (left_on) {
@@ -197,11 +251,13 @@ public class ArmAndDrive extends OpMode{
             rightArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
 
+
         /*
         presets for the left arm
          */
         //COMPLETED: testing whether 0.5 is the proper moving speed of the object
-        if (gamepad1.dpad_down) {
+        /*
+        if (gamepad2.dpad_down) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftArm.setPower(0.4);
@@ -209,7 +265,7 @@ public class ArmAndDrive extends OpMode{
             leftArm.setTargetPosition(lDOWN);
             rightArm.setTargetPosition(rDOWN);
             telemetry.addLine("Down");
-        } else if (gamepad1.dpad_left) {
+        } else if (gamepad2.dpad_left) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftArm.setPower(0.4);
@@ -217,7 +273,7 @@ public class ArmAndDrive extends OpMode{
             leftArm.setTargetPosition(lLEFT);
             rightArm.setTargetPosition(rLEFT);
             telemetry.addLine("LEFT");
-        } else if (gamepad1.dpad_right) {
+        } else if (gamepad2.dpad_right) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftArm.setPower(0.4);
@@ -225,7 +281,7 @@ public class ArmAndDrive extends OpMode{
             leftArm.setTargetPosition(lRIGHT);
             rightArm.setTargetPosition(rRIGHT);
             telemetry.addLine("RIGHT");
-        } else if (gamepad1.dpad_up) {
+        } else if (gamepad2.dpad_up) {
             leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftArm.setPower(0.4);
@@ -234,7 +290,7 @@ public class ArmAndDrive extends OpMode{
             rightArm.setTargetPosition(rUP);
             telemetry.addLine("UP");
         }
-
+    */
 
         telemetry.addData("Motors", ("left: " + leftPower + "right: " + rightPower));
         telemetry.addData("leftArm Power:     ",leftArm.getPower());
