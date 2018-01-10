@@ -22,8 +22,8 @@ public class ArmAndDrive extends OpMode{
     private Servo leftr = null;
     private Servo rightl = null;
     private Servo rightr = null;
-    final int l_initial_position=165;
-    final int r_initial_position=140;
+    final int l_initial_position=200;
+    final int r_initial_position=180;
     final double lpos_l=0.72;
     final double lpos_r=0.58;
     final double rpos_l=0.5;
@@ -96,6 +96,13 @@ public class ArmAndDrive extends OpMode{
         rightl.setPosition(rpos_l);
         rightr.setDirection(Servo.Direction.REVERSE);
         rightr.setPosition(rpos_r);
+
+
+        leftl.setPosition(lpos_l - close_value);
+        leftr.setPosition(lpos_r - close_value);
+
+        rightl.setPosition(rpos_l - close_value);
+        rightr.setPosition(rpos_r - close_value);
 
         //------------------------------------------------------------------------------------
 
@@ -196,6 +203,7 @@ public class ArmAndDrive extends OpMode{
          /*
         This part is for manual control for the arm, which means the driver can set the power of the arm motor himself.
          */
+
         if (gamepad2.a) {
             leftl.setPosition(lpos_l - close_value);
             leftr.setPosition(lpos_r - close_value);

@@ -28,10 +28,11 @@ public class JewelKnockerBlue extends LinearOpMode
         servoUpDown = hardwareMap.get(Servo.class, "jewel_knocker_updown");
         servoSide = hardwareMap.get(Servo.class, "jewel_knocker_sideways");
 
-        servoUpDown.setPosition(0.8);
-        //servoSide.setPosition(0.8);
+        //servoUpDown.setPosition(0.8);
+        //servoSide.setPosition(0.5);
 
-
+        telemetry.addData("jewel_knocker_updown: ", servoUpDown.getPosition());
+        telemetry.addData("jewel_knocker_sideways: ", servoSide.getPosition());
 
         /*
         if (colorsensor.blue() > colorsensor.red()) {
@@ -45,7 +46,9 @@ public class JewelKnockerBlue extends LinearOpMode
             telemetry.addData("Blue Value:", colorsensor.blue());
         }
         */
+
         //Commented by Alex on 12/06
+        //uncommented by Nitin on 1/9/18
 
 
     }

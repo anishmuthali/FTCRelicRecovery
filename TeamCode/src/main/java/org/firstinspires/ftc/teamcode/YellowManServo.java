@@ -19,7 +19,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 public class YellowManServo extends OpMode{
     ElapsedTime runtime = new ElapsedTime();
     //private Servo servo1 = null;
+    private DcMotor MainslideMotor = null;
     private DcMotor slideMotor = null;
+
     boolean closed;
     boolean pressed;
 
@@ -28,11 +30,12 @@ public class YellowManServo extends OpMode{
     public void init() {
         telemetry.clearAll();
         telemetry.addData("Status", "Initialized");
-       // servo1 = hardwareMap.get(Servo.class, "servo1");
-        slideMotor= hardwareMap.get(DcMotor.class, "slideMotor");
-       // telemetry.addData("claw servo", servo1.getPosition());
-       // this.closed = true;
-       // this.pressed = false;
+        //servo1 = hardwareMap.get(Servo.class, "servo1");
+        slideMotor= hardwareMap.get(DcMotor.class, "clawUpDownMotor");
+        MainslideMotor = hardwareMap.get(DcMotor.class, "mainSlideMotor");
+        //telemetry.addData("claw servo", servo1.getPosition());
+        this.closed = true;
+        this.pressed = false;
     }
 
     @Override
@@ -43,24 +46,31 @@ public class YellowManServo extends OpMode{
     @Override
     public void loop()
     {
-        if(gamepad1.dpad_up){
+        if(gamepad2.dpad_up){
             slideMotor.setPower(0.3);
-        }else if(gamepad1.dpad_down){
+        }else if(gamepad2.dpad_down){
             slideMotor.setPower(-0.3);
         }else{
             slideMotor.setPower(0);
         }
 
+        if(gamepad2.dpad_right){
+            slideMotor.setPower(0.3);
+        }else if(gamepad2.dpad_left){
+            slideMotor.setPower(-0.3);
+        }else{
+            slideMotor.setPower(0);
+        }
 
-/*
+        /*
         if(pressed)
         {
-            if(!gamepad1.a)
+            if(!gamepad2.a)
                 pressed = false;
         }
         else
         {
-            if(gamepad1.a)
+            if(gamepad2.a)
             {
                 if(!closed)
                 {
@@ -82,9 +92,9 @@ public class YellowManServo extends OpMode{
             }
         }
         telemetry.addData("servo1: ", servo1.getPosition());
+        */
         telemetry.addData("slideMotor: ", slideMotor.getPower());
         telemetry.addData("runtime", getRuntime());
-        */
     }
 }
 
