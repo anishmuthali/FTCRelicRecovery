@@ -18,7 +18,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 //@Disabled
 public class YellowManServo extends OpMode{
     ElapsedTime runtime = new ElapsedTime();
-    //private Servo servo1 = null;
+    private Servo servo1 = null;
     private DcMotor extendMotor = null;
     private DcMotor retractMotor = null;
 
@@ -30,12 +30,15 @@ public class YellowManServo extends OpMode{
     public void init() {
         telemetry.clearAll();
         telemetry.addData("Status", "Initialized");
-        //servo1 = hardwareMap.get(Servo.class, "servo1");
+        servo1 = hardwareMap.get(Servo.class, "servo1");
         retractMotor= hardwareMap.get(DcMotor.class, "retractMotor");
         extendMotor = hardwareMap.get(DcMotor.class, "extendMotor");
-        //telemetry.addData("claw servo", servo1.getPosition());
+        telemetry.addData("claw servo", servo1.getPosition());
         this.closed = true;
         this.pressed = false;
+
+        extendMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        retractMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     @Override
@@ -63,7 +66,19 @@ public class YellowManServo extends OpMode{
             extendMotor.setPower(0);
         }
 
-        /*
+        if(gamepad1.a)
+        {
+            extendMotor.setPower(-0.3);
+            retractMotor.setPower(0.3);
+        } else if(gamepad1.b){
+            extendMotor.setPower(0.3);
+            retractMotor.setPower(-0.3);
+        } else {
+            extendMotor.setPower(0);
+            retractMotor.setPower(0);
+        }
+
+
         if(pressed)
         {
             if(!gamepad2.a)
@@ -93,7 +108,7 @@ public class YellowManServo extends OpMode{
             }
         }
         telemetry.addData("servo1: ", servo1.getPosition());
-        */
+
         telemetry.addData("retractMotor: ", retractMotor.getPower());
         telemetry.addData("extendMotor: ", extendMotor.getPower());
         telemetry.addData("runtime", getRuntime());
