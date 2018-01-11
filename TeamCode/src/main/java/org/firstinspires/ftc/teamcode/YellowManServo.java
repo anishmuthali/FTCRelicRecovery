@@ -54,12 +54,17 @@ public class YellowManServo extends OpMode{
             slideMotor.setPower(0);
         }
 
+<<<<<<< HEAD
         if(gamepad1.dpad_right){
             slideMotor.setPower(0.3);
+=======
+        if(gamepad2.dpad_right){
+            MainslideMotor.setPower(0.3);
+>>>>>>> c53846877d73709d1a109c229dbba7d2be9d8fa4
         }else if(gamepad2.dpad_left){
-            slideMotor.setPower(-0.3);
+            MainslideMotor.setPower(-0.3);
         }else{
-            slideMotor.setPower(0);
+            MainslideMotor.setPower(0);
         }
 
         /*
