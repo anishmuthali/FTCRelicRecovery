@@ -33,7 +33,6 @@ public class YellowManServo extends OpMode{
         servo1 = hardwareMap.get(Servo.class, "servo1");
         retractMotor= hardwareMap.get(DcMotor.class, "retractMotor");
         extendMotor = hardwareMap.get(DcMotor.class, "extendMotor");
-        telemetry.addData("claw servo", servo1.getPosition());
         this.closed = true;
         this.pressed = false;
 
@@ -49,6 +48,13 @@ public class YellowManServo extends OpMode{
     @Override
     public void loop()
     {
+
+        if(retractMotor.getPower()!=0){
+        extendMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+    }else if(extendMotor.getPower()!=0){
+        retractMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+    }
+
         if(gamepad1.dpad_up){
             retractMotor.setPower(0.3);
         }else if(gamepad1.dpad_down){
@@ -56,7 +62,6 @@ public class YellowManServo extends OpMode{
         }else{
             retractMotor.setPower(0);
         }
-
 
         if(gamepad1.x){
             extendMotor.setPower(0.3);
@@ -66,40 +71,29 @@ public class YellowManServo extends OpMode{
             extendMotor.setPower(0);
         }
 
-        if(gamepad1.a)
-        {
-            extendMotor.setPower(-0.3);
-            retractMotor.setPower(0.3);
-        } else if(gamepad1.b){
-            extendMotor.setPower(0.3);
-            retractMotor.setPower(-0.3);
-        } else {
-            extendMotor.setPower(0);
-            retractMotor.setPower(0);
-        }
 
 
         if(pressed)
         {
-            if(!gamepad2.a)
+            if(!gamepad1.a)
                 pressed = false;
         }
         else
         {
-            if(gamepad2.a)
+            if(gamepad1.a)
             {
                 if(!closed)
                 {
                     //closing the servo
                     servo1.setDirection(Servo.Direction.FORWARD);
-                    servo1.setPosition(0.2);
+                    servo1.setPosition(0.3);
                     closed = true;
                     telemetry.addLine("closed");
                 }
                 else
                 {
                     //opening the servo
-                    servo1.setDirection(Servo.Direction.REVERSE);
+                    servo1.setDirection(Servo.Direction.FORWARD);
                     servo1.setPosition(0.8);
                     closed = false;
                     telemetry.addLine("opened");
@@ -108,9 +102,10 @@ public class YellowManServo extends OpMode{
             }
         }
         telemetry.addData("servo1: ", servo1.getPosition());
-
         telemetry.addData("retractMotor: ", retractMotor.getPower());
+        telemetry.addData("retractMotor: ", retractMotor.getZeroPowerBehavior());
         telemetry.addData("extendMotor: ", extendMotor.getPower());
+        telemetry.addData("extendMotor: ", extendMotor.getZeroPowerBehavior());
         telemetry.addData("runtime", getRuntime());
     }
 }

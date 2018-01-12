@@ -37,19 +37,19 @@ public class VuforiaIdentification extends LinearOpMode
     double rY; // Same as above but for Y
     double rZ; // Same as above but for Z
 
-    DcMotor right; // Random Motor
-    DcMotor left; // Random Motor
+   // DcMotor right; // Random Motor
+   // DcMotor left; // Random Motor
 
     VuforiaLocalizer vuforia;
 
     public void runOpMode()
     {
-        right = hardwareMap.dcMotor.get("r"); // Random Motor
-        left = hardwareMap.dcMotor.get("l"); // Random Motor
+        //right = hardwareMap.dcMotor.get("r"); // Random Motor
+        //left = hardwareMap.dcMotor.get("l"); // Random Motor
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
         parameters.vuforiaLicenseKey = "ATFPVM//////AAAAGaQHWEogN040pj3lfJLK7WBPALzW4HCPJ4QGUQF667wsO4dj3DhNgABmt9RE0xFVOUN0KNT8KbS6dVE1WoszPV3xW/iCtg4TTi/QIr+0WP+L+qN9qf86PYsGTsnFb/7h3K5Torwiu+iej/z4HU/Mkx0ldYJfMwtKNKYhbTT9ZbxJ/3YE5lIt4rTkOrszpiqV3t7A6QZRhOcynT/+xen5K7JmMkK9Fn6sdKTsMjZ2wtBdGKUQVbGKkJjABXOzXKbI9kPeVJwOmidLebrbXxpa3Wyp7bNgzmniWuogMoEOmmDR41vXlCNtLUMHlIubuhqHb2nbXqDIQbtnQRCf+9EUvIdDhVDBW/egNDiL605dms/Y";
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT; // Use FRONT Camera (Change to BACK if you want to use that one)
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK; // Use FRONT Camera (Change to BACK if you want to use that one)
         parameters.cameraMonitorFeedback = VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES; // Display Axes
 
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
