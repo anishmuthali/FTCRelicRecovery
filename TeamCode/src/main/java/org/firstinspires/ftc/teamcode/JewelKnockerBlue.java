@@ -28,29 +28,34 @@ public class JewelKnockerBlue extends LinearOpMode
         servoUpDown = hardwareMap.get(Servo.class, "servoUpDown");
         servoSide = hardwareMap.get(Servo.class, "servoSide");
 
-        //servoUpDown.setPosition(0.8);
-        //servoSide.setPosition(0.5);
-
-        telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
-        telemetry.addData("servoSide: ", servoSide.getPosition());
+        servoUpDown.setDirection(Servo.Direction.REVERSE);
+        servoUpDown.setPosition(0.6);
+        servoSide.setPosition(0.35);
 
 
-        if (colorsensor.blue() > colorsensor.red()) {
-            //servoSide.setPosition(0.2);
+        while (opModeIsActive()) {
+
+            sleep(2000);
+
+
+
+            if (colorsensor.blue() > colorsensor.red()) {
+                servoSide.setPosition(0.1);
+                telemetry.addLine("Blue");
+
+            } else {
+                servoSide.setPosition(0.6);
+                telemetry.addLine("Red");
+            }
+
+
+            telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
+            telemetry.addData("servoSide: ", servoSide.getPosition());
             telemetry.addData("Red Value:", colorsensor.red());
             telemetry.addData("Blue Value:", colorsensor.blue());
-            telemetry.addLine("Blue");
-
-        } else {
-            //servoSide.setPosition(0.8);
-            telemetry.addData("Red Value:", colorsensor.red());
-            telemetry.addData("Blue Value:", colorsensor.blue());
-            telemetry.addLine("Red");
+            //Commented by Alex on 12/06
+            //uncommented by Nitin on 1/9/18
+            telemetry.update();
         }
-
-        //Commented by Alex on 12/06
-        //uncommented by Nitin on 1/9/18
-
-
     }
 }

@@ -57,11 +57,19 @@ public class DriverOp extends OpMode {
     boolean closed;
     boolean pressed;
     boolean rightClosed = false;
-    boolean leftClosed = false;
+
+
+
+    private Servo servoUpDown = null;
+    private Servo servoSide = null;
 
     @Override
     public void init() {
         //Initialization for Wheels:
+        servoUpDown = hardwareMap.get(Servo.class, "servoUpDown");
+        servoSide = hardwareMap.get(Servo.class, "servoSide");
+
+
 
         // Find motors on hardware map
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
@@ -141,6 +149,10 @@ public class DriverOp extends OpMode {
         Code for Wheels
          */
 
+        servoUpDown.setDirection(Servo.Direction.REVERSE);
+        servoUpDown.setPosition(0.3);
+        servoSide.setPosition(0.35);
+        
         double leftPower = -0.6 * (gamepad1.right_stick_y);
         double rightPower = -0.6 * (gamepad1.left_stick_y);
 
@@ -360,6 +372,8 @@ public class DriverOp extends OpMode {
             telemetry.addData("extendMotor: ", extendMotor.getZeroPowerBehavior());
             telemetry.addData("rightClosed: ", rclosed);
             telemetry.addData("leftClosed: ", lclosed);
+            telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
+            telemetry.addData("servoSide: ", servoSide.getPosition());
             telemetry.addData("Runtime:", getRuntime());
 
 
