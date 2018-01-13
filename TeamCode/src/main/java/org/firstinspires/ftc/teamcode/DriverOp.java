@@ -39,6 +39,8 @@ public class DriverOp extends OpMode {
     final int rRIGHT = 727;
     private boolean slowMode = false;
     private boolean fastMode = false;
+    boolean rightPressed = false;
+    boolean leftPressed = false;
     //------------------------------------------------------------------------------------
     //Objects for Wheels
     private DcMotor frontLeft = null;
@@ -52,6 +54,8 @@ public class DriverOp extends OpMode {
     private DcMotor retractMotor = null;
     boolean closed;
     boolean pressed;
+    boolean rightClosed = false;
+    boolean leftClosed = false;
 
     @Override
     public void init() {
@@ -185,38 +189,77 @@ public class DriverOp extends OpMode {
         This part is for manual control for the arm, which means the driver can set the power of the arm motor himself.
          */
 
-            if (gamepad2.a) {
+
+
+            if (rightPressed) {
+                if (!gamepad1.right_bumper)
+                    rightPressed = false;
+            } else {
+                if (gamepad1.right_bumper) {
+                    if (!rightClosed) {
+                        //closing the servo
+                        rightClosed = true;
+                    } else {
+                        //opening the servo
+                        rightClosed = false;
+                    }
+                    rightPressed = true;
+                }
+            }
+
+            if (leftPressed) {
+                if (!gamepad1.left_bumper)
+                    leftPressed = false;
+            } else {
+                if (gamepad1.left_bumper) {
+                    if (!rightClosed) {
+                        //closing the servo
+                        leftClosed = true;
+                    } else {
+                        //opening the servo
+                        leftClosed = false;
+                    }
+                    leftPressed = true;
+                }
+            }
+
+
+
+            if (leftClosed) {
                 leftl.setPosition(lpos_l - close_value);
                 leftr.setPosition(lpos_r - close_value);
                 // COMPLETED: add space management code for the right arm
-            } else if (gamepad2.b) {
+            } else if (!leftClosed) {
                 leftl.setPosition(lpos_l);
                 leftr.setPosition(lpos_r);
                 // COMPLETED: add space management code for the right arm
             }
-            if (gamepad2.x) {
+            if (rightClosed) {
                 rightl.setPosition(rpos_l - close_value);
                 rightr.setPosition(rpos_r - close_value);
                 // COMPLETED: add space management code for the right arm
-            } else if (gamepad2.y) {
+            } else if (!rightClosed) {
                 rightl.setPosition(rpos_l);
                 rightr.setPosition(rpos_r);
                 // COMPLETED: add space management code for the right arm
             }
 
+
+            /*
             boolean left_on = gamepad2.left_bumper;
             double left_triggerValue = gamepad2.left_trigger;
             boolean right_on = gamepad2.right_bumper;
             double right_triggerValue = gamepad2.right_trigger;
+            */
 
             // if left bumper is pressed, move the arm up
-            if (left_on) {
+            if (gamepad2.left_stick_y < 0) {
                 leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 leftArm.setPower(0.4);
 
             }
             // if left trigger is pressed, drop the arm down
-            else if (left_triggerValue > 0.0) {
+            else if (gamepad2.left_stick_y > 0) {
                 leftArm.setPower(-0.01);
 
             }
@@ -228,10 +271,10 @@ public class DriverOp extends OpMode {
             }
 
             //Same algorithm for right arm
-            if (right_on) {
+            if (gamepad2.right_stick_y < 0) {
                 rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 rightArm.setPower(0.4);
-            } else if (right_triggerValue > 0.0) {
+            } else if (gamepad2.right_stick_y > 0) {
                 rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 rightArm.setPower(-0.01);
             } else {
@@ -302,9 +345,9 @@ public class DriverOp extends OpMode {
             }
 
             if (gamepad1.left_trigger != 0) {
-                extendMotor.setPower(0.3);
+                extendMotor.setPower(0.15);
             } else if (gamepad1.right_trigger != 0) {
-                extendMotor.setPower(-0.3);
+                extendMotor.setPower(-0.15);
             } else {
                 extendMotor.setPower(0);
             }
@@ -318,13 +361,13 @@ public class DriverOp extends OpMode {
                     if (!closed) {
                         //closing the servo
                         servo1.setDirection(Servo.Direction.FORWARD);
-                        servo1.setPosition(0.3);
+                        servo1.setPosition(0.1);
                         closed = true;
                         telemetry.addLine("closed");
                     } else {
                         //opening the servo
                         servo1.setDirection(Servo.Direction.FORWARD);
-                        servo1.setPosition(0.8);
+                        servo1.setPosition(0.45);
                         closed = false;
                         telemetry.addLine("opened");
                     }

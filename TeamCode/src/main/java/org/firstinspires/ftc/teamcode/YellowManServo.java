@@ -56,9 +56,9 @@ public class YellowManServo extends OpMode{
     }
 
         if(gamepad1.dpad_up){
-            retractMotor.setPower(0.3);
+            retractMotor.setPower(0.15);
         }else if(gamepad1.dpad_down){
-            retractMotor.setPower(-3);
+            retractMotor.setPower(-0.15);
         }else{
             retractMotor.setPower(0);
         }
@@ -86,7 +86,7 @@ public class YellowManServo extends OpMode{
                 {
                     //closing the servo
                     servo1.setDirection(Servo.Direction.FORWARD);
-                    servo1.setPosition(0.3);
+                    servo1.setPosition(0.1);
                     closed = true;
                     telemetry.addLine("closed");
                 }
@@ -94,7 +94,7 @@ public class YellowManServo extends OpMode{
                 {
                     //opening the servo
                     servo1.setDirection(Servo.Direction.FORWARD);
-                    servo1.setPosition(0.8);
+                    servo1.setPosition(0.45);
                     closed = false;
                     telemetry.addLine("opened");
                 }

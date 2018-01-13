@@ -24,28 +24,29 @@ public class JewelKnockerBlue extends LinearOpMode
     {
         waitForStart();
         // Find servos and sensors on hardware map
-        colorsensor = hardwareMap.get(ColorSensor.class, "jewel_sensor");
-        servoUpDown = hardwareMap.get(Servo.class, "jewel_knocker_updown");
-        servoSide = hardwareMap.get(Servo.class, "jewel_knocker_sideways");
+        colorsensor = hardwareMap.get(ColorSensor.class, "colorsensor");
+        servoUpDown = hardwareMap.get(Servo.class, "servoUpDown");
+        servoSide = hardwareMap.get(Servo.class, "servoSide");
 
         //servoUpDown.setPosition(0.8);
         //servoSide.setPosition(0.5);
 
-        telemetry.addData("jewel_knocker_updown: ", servoUpDown.getPosition());
-        telemetry.addData("jewel_knocker_sideways: ", servoSide.getPosition());
+        telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
+        telemetry.addData("servoSide: ", servoSide.getPosition());
 
-        /*
+
         if (colorsensor.blue() > colorsensor.red()) {
-            servoSide.setPosition(0.2);
+            //servoSide.setPosition(0.2);
             telemetry.addData("Red Value:", colorsensor.red());
             telemetry.addData("Blue Value:", colorsensor.blue());
-        }else
-        {
-            servoSide.setPosition(0.8);
+            telemetry.addLine("Blue");
+
+        } else {
+            //servoSide.setPosition(0.8);
             telemetry.addData("Red Value:", colorsensor.red());
             telemetry.addData("Blue Value:", colorsensor.blue());
+            telemetry.addLine("Red");
         }
-        */
 
         //Commented by Alex on 12/06
         //uncommented by Nitin on 1/9/18
