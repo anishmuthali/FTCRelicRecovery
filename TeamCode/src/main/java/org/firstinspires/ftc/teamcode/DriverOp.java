@@ -150,7 +150,7 @@ public class DriverOp extends OpMode {
         } else if (gamepad1.y) {
             slowMode = true;
             fastMode = false;
-
+        }
 
             // Get data from controllers
             if (slowMode) {
@@ -191,7 +191,7 @@ public class DriverOp extends OpMode {
 
 
 
-            if (rightPressed) {
+           /* if (rightPressed) {
                 if (!gamepad1.right_bumper)
                     rightPressed = false;
             } else {
@@ -199,9 +199,6 @@ public class DriverOp extends OpMode {
                     if (!rightClosed) {
                         //closing the servo
                         rightClosed = true;
-                    } else {
-                        //opening the servo
-                        rightClosed = false;
                     }
                     rightPressed = true;
                 }
@@ -215,30 +212,27 @@ public class DriverOp extends OpMode {
                     if (!rightClosed) {
                         //closing the servo
                         leftClosed = true;
-                    } else {
-                        //opening the servo
-                        leftClosed = false;
                     }
                     leftPressed = true;
                 }
             }
+         */
 
 
-
-            if (leftClosed) {
+            if (gamepad2.left_trigger!=0) {
                 leftl.setPosition(lpos_l - close_value);
                 leftr.setPosition(lpos_r - close_value);
                 // COMPLETED: add space management code for the right arm
-            } else if (!leftClosed) {
+            } else {
                 leftl.setPosition(lpos_l);
                 leftr.setPosition(lpos_r);
                 // COMPLETED: add space management code for the right arm
             }
-            if (rightClosed) {
+            if (gamepad2.right_trigger!=0) {
                 rightl.setPosition(rpos_l - close_value);
                 rightr.setPosition(rpos_r - close_value);
                 // COMPLETED: add space management code for the right arm
-            } else if (!rightClosed) {
+            } else {
                 rightl.setPosition(rpos_l);
                 rightr.setPosition(rpos_r);
                 // COMPLETED: add space management code for the right arm
@@ -337,17 +331,17 @@ public class DriverOp extends OpMode {
             }
 
             if (gamepad1.left_bumper) {
-                retractMotor.setPower(0.3);
+                retractMotor.setPower(0.2);
             } else if (gamepad1.right_bumper) {
-                retractMotor.setPower(-3);
+                retractMotor.setPower(-0.2);
             } else {
                 retractMotor.setPower(0);
             }
 
             if (gamepad1.left_trigger != 0) {
-                extendMotor.setPower(0.15);
+                extendMotor.setPower(0.3);
             } else if (gamepad1.right_trigger != 0) {
-                extendMotor.setPower(-0.15);
+                extendMotor.setPower(-0.3);
             } else {
                 extendMotor.setPower(0);
             }
@@ -390,9 +384,11 @@ public class DriverOp extends OpMode {
             telemetry.addData("retractMotor: ", retractMotor.getZeroPowerBehavior());
             telemetry.addData("extendMotor: ", extendMotor.getPower());
             telemetry.addData("extendMotor: ", extendMotor.getZeroPowerBehavior());
+            telemetry.addData("rightClosed: ", rightClosed);
+            telemetry.addData("leftClosed: ", leftClosed);
             telemetry.addData("Runtime:", getRuntime());
 
 
         }
     }
-}
+
