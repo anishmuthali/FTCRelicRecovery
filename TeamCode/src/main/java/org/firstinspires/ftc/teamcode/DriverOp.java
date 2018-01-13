@@ -39,8 +39,10 @@ public class DriverOp extends OpMode {
     final int rRIGHT = 727;
     private boolean slowMode = false;
     private boolean fastMode = false;
-    boolean rightPressed = false;
-    boolean leftPressed = false;
+    boolean rclosed = true;
+    boolean rightReleased = true;
+    boolean lclosed = true;
+    boolean leftReleased = true;
     //------------------------------------------------------------------------------------
     //Objects for Wheels
     private DcMotor frontLeft = null;
@@ -190,36 +192,52 @@ public class DriverOp extends OpMode {
          */
 
 
-
-           /* if (rightPressed) {
-                if (!gamepad1.right_bumper)
-                    rightPressed = false;
-            } else {
-                if (gamepad1.right_bumper) {
-                    if (!rightClosed) {
-                        //closing the servo
-                        rightClosed = true;
-                    }
-                    rightPressed = true;
+        if(gamepad2.right_bumper)
+        {
+            if(rightReleased)
+            {
+                if(rclosed)
+                {
+                    rclosed=false;
+                }
+                else
+                {
+                    rclosed = true;
                 }
             }
+            rightReleased = false;
+        }
+        else {
+            rightReleased = true;
+        }
 
-            if (leftPressed) {
-                if (!gamepad1.left_bumper)
-                    leftPressed = false;
-            } else {
-                if (gamepad1.left_bumper) {
-                    if (!rightClosed) {
-                        //closing the servo
-                        leftClosed = true;
-                    }
-                    leftPressed = true;
+
+
+        if(gamepad2.left_bumper)
+        {
+            if(leftReleased)
+            {
+                if(lclosed)
+                {
+                    lclosed=false;
+                }
+                else
+                {
+                    lclosed = true;
                 }
             }
-         */
+            leftReleased = false;
+        }
+        else {
+            leftReleased = true;
+        }
 
 
-            if (gamepad2.left_trigger!=0) {
+
+
+
+
+            if (lclosed) {
                 leftl.setPosition(lpos_l - close_value);
                 leftr.setPosition(lpos_r - close_value);
                 // COMPLETED: add space management code for the right arm
@@ -228,7 +246,7 @@ public class DriverOp extends OpMode {
                 leftr.setPosition(lpos_r);
                 // COMPLETED: add space management code for the right arm
             }
-            if (gamepad2.right_trigger!=0) {
+            if (rclosed) {
                 rightl.setPosition(rpos_l - close_value);
                 rightr.setPosition(rpos_r - close_value);
                 // COMPLETED: add space management code for the right arm
@@ -239,20 +257,14 @@ public class DriverOp extends OpMode {
             }
 
 
-            /*
-            boolean left_on = gamepad2.left_bumper;
-            double left_triggerValue = gamepad2.left_trigger;
-            boolean right_on = gamepad2.right_bumper;
-            double right_triggerValue = gamepad2.right_trigger;
-            */
 
-            // if left bumper is pressed, move the arm up
+            // if left joystick is up, move the arm up
             if (gamepad2.left_stick_y < 0) {
                 leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 leftArm.setPower(0.4);
 
             }
-            // if left trigger is pressed, drop the arm down
+            // if left joystick is down, drop the arm down
             else if (gamepad2.left_stick_y > 0) {
                 leftArm.setPower(-0.01);
 
@@ -277,45 +289,7 @@ public class DriverOp extends OpMode {
             }
 
 
-        /*
-        presets for the left arm
-         */
-            //COMPLETED: testing whether 0.5 is the proper moving speed of the object
-        /*
-        if (gamepad2.dpad_down) {
-            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftArm.setPower(0.4);
-            rightArm.setPower(0.4);
-            leftArm.setTargetPosition(lDOWN);
-            rightArm.setTargetPosition(rDOWN);
-            telemetry.addLine("Down");
-        } else if (gamepad2.dpad_left) {
-            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftArm.setPower(0.4);
-            rightArm.setPower(0.4);
-            leftArm.setTargetPosition(lLEFT);
-            rightArm.setTargetPosition(rLEFT);
-            telemetry.addLine("LEFT");
-        } else if (gamepad2.dpad_right) {
-            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftArm.setPower(0.4);
-            rightArm.setPower(0.4);
-            leftArm.setTargetPosition(lRIGHT);
-            rightArm.setTargetPosition(rRIGHT);
-            telemetry.addLine("RIGHT");
-        } else if (gamepad2.dpad_up) {
-            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftArm.setPower(0.4);
-            rightArm.setPower(0.4);
-            leftArm.setTargetPosition(lUP);
-            rightArm.setTargetPosition(rUP);
-            telemetry.addLine("UP");
-        }
-    */
+
 
             //------------------------------------------------------------------------------------
 
@@ -384,8 +358,8 @@ public class DriverOp extends OpMode {
             telemetry.addData("retractMotor: ", retractMotor.getZeroPowerBehavior());
             telemetry.addData("extendMotor: ", extendMotor.getPower());
             telemetry.addData("extendMotor: ", extendMotor.getZeroPowerBehavior());
-            telemetry.addData("rightClosed: ", rightClosed);
-            telemetry.addData("leftClosed: ", leftClosed);
+            telemetry.addData("rightClosed: ", rclosed);
+            telemetry.addData("leftClosed: ", lclosed);
             telemetry.addData("Runtime:", getRuntime());
 
 

@@ -1,0 +1,37 @@
+        /*
+        presets for the left arm
+         */
+            //COMPLETED: testing whether 0.5 is the proper moving speed of the object
+        if (gamepad2.dpad_down) {
+            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftArm.setPower(0.4);
+            rightArm.setPower(0.4);
+            leftArm.setTargetPosition(lDOWN);
+            rightArm.setTargetPosition(rDOWN);
+            telemetry.addLine("Down");
+        } else if (gamepad2.dpad_left) {
+            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftArm.setPower(0.4);
+            rightArm.setPower(0.4);
+            leftArm.setTargetPosition(lLEFT);
+            rightArm.setTargetPosition(rLEFT);
+            telemetry.addLine("LEFT");
+        } else if (gamepad2.dpad_right) {
+            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftArm.setPower(0.4);
+            rightArm.setPower(0.4);
+            leftArm.setTargetPosition(lRIGHT);
+            rightArm.setTargetPosition(rRIGHT);
+            telemetry.addLine("RIGHT");
+        } else if (gamepad2.dpad_up) {
+            leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftArm.setPower(0.4);
+            rightArm.setPower(0.4);
+            leftArm.setTargetPosition(lUP);
+            rightArm.setTargetPosition(rUP);
+            telemetry.addLine("UP");
+        }
