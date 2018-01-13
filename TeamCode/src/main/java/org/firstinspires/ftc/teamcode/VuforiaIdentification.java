@@ -21,9 +21,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 /**
  * Created by Alex on 9/9/17.
- * Note: This algorithm is not tested, but there are other teams using this part of code in their program and successfully finish the ending action in the autonomous period.
- * We can test this algorithm after finishing all the prior codes.
- */
+*/
   @Autonomous(name = "VuforiaRelic", group = "Autonomous")
 //@Disabled
 public class VuforiaIdentification extends LinearOpMode

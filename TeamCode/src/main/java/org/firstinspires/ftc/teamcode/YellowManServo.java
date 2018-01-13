@@ -58,7 +58,7 @@ public class YellowManServo extends OpMode{
         if(gamepad1.dpad_up){
             retractMotor.setPower(0.3);
         }else if(gamepad1.dpad_down){
-            retractMotor.setPower(-0.3);
+            retractMotor.setPower(-3);
         }else{
             retractMotor.setPower(0);
         }
