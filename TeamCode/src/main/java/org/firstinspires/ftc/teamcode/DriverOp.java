@@ -28,7 +28,7 @@ public class DriverOp extends OpMode {
     final double lpos_r = 0.58;
     final double rpos_l = 0.5;
     final double rpos_r = 0.65;
-    final double close_value = 0.13;
+    final double close_value = 0.16;
     final int lUP = 1440;
     final int lDOWN = 165;
     final int lLEFT = 639;
