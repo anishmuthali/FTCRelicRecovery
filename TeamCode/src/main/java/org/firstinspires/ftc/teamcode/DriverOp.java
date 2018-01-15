@@ -28,15 +28,15 @@ public class DriverOp extends OpMode {
     final double lpos_r = 0.58;
     final double rpos_l = 0.5;
     final double rpos_r = 0.65;
-    final double close_value = 0.16;
-    final int lUP = 1440;
-    final int lDOWN = 165;
-    final int lLEFT = 639;
-    final int lRIGHT = 1000;
-    final int rUP = 982;
-    final int rDOWN = 140;
-    final int rLEFT = 482;
-    final int rRIGHT = 727;
+    final double close_value = 0.25;
+//    final int lUP = 1440;
+//    final int lDOWN = 165;
+//    final int lLEFT = 639;
+//    final int lRIGHT = 1000;
+//    final int rUP = 982;
+//    final int rDOWN = 140;
+//    final int rLEFT = 482;
+//    final int rRIGHT = 727;
     private boolean slowMode = false;
     private boolean fastMode = false;
     boolean rclosed = true;
@@ -65,12 +65,12 @@ public class DriverOp extends OpMode {
 
     @Override
     public void init() {
-        //Initialization for Wheels:
+        //Initialization for JewelKnocker Servos:
         servoUpDown = hardwareMap.get(Servo.class, "servoUpDown");
         servoSide = hardwareMap.get(Servo.class, "servoSide");
 
-
-
+        //------------------------------------------------------------------------------------
+        //Initialization for Wheels:
         // Find motors on hardware map
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
         frontRight = hardwareMap.get(DcMotor.class, "front_right");
@@ -88,7 +88,6 @@ public class DriverOp extends OpMode {
         backRight.setDirection(DcMotor.Direction.FORWARD);
 
         //------------------------------------------------------------------------------------
-
         //Initialization for Arms:
         //declaring the servos and motors to be objects
         leftArm = hardwareMap.get(DcMotor.class, "leftArm");
@@ -133,7 +132,7 @@ public class DriverOp extends OpMode {
         extendMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         retractMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        //resetting telemetry data
+        //Resetting telemetry data
         telemetry.clearAll();
     }
 
@@ -145,14 +144,15 @@ public class DriverOp extends OpMode {
     @Override
     public void loop() {
 
-        /*
-        Code for Wheels
-         */
 
+        //Code for Servos
         servoUpDown.setDirection(Servo.Direction.REVERSE);
         servoUpDown.setPosition(0.3);
         servoSide.setPosition(0.35);
-        
+
+
+        //Code for Wheels
+
         double leftPower = -0.6 * (gamepad1.right_stick_y);
         double rightPower = -0.6 * (gamepad1.left_stick_y);
 
@@ -195,112 +195,111 @@ public class DriverOp extends OpMode {
             //------------------------------------------------------------------------------------
 
 
-        /*
-        Code for Arms
-         */
+        //Code for Arms
+
 
          /*
         This part is for manual control for the arm, which means the driver can set the power of the arm motor himself.
          */
 
 
-        if(gamepad2.right_bumper)
-        {
-            if(rightReleased)
-            {
-                if(rclosed)
-                {
-                    rclosed=false;
-                }
-                else
-                {
-                    rclosed = true;
-                }
-            }
-            rightReleased = false;
-        }
-        else {
-            rightReleased = true;
-        }
-
-
-
-        if(gamepad2.left_bumper)
-        {
-            if(leftReleased)
-            {
-                if(lclosed)
-                {
-                    lclosed=false;
-                }
-                else
-                {
-                    lclosed = true;
-                }
-            }
-            leftReleased = false;
-        }
-        else {
-            leftReleased = true;
-        }
-
-
-
-
-
-
-            if (lclosed) {
-                leftl.setPosition(lpos_l - close_value);
-                leftr.setPosition(lpos_r - close_value);
-                // COMPLETED: add space management code for the right arm
-            } else {
-                leftl.setPosition(lpos_l);
-                leftr.setPosition(lpos_r);
-                // COMPLETED: add space management code for the right arm
-            }
-            if (rclosed) {
-                rightl.setPosition(rpos_l - close_value);
-                rightr.setPosition(rpos_r - close_value);
-                // COMPLETED: add space management code for the right arm
-            } else {
-                rightl.setPosition(rpos_l);
-                rightr.setPosition(rpos_r);
-                // COMPLETED: add space management code for the right arm
-            }
-
-
-
-            // if left joystick is up, move the arm up
-            if (gamepad2.left_stick_y < 0) {
-                leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                leftArm.setPower(0.4);
-
-            }
-            // if left joystick is down, drop the arm down
-            else if (gamepad2.left_stick_y > 0) {
-                leftArm.setPower(-0.01);
-
-            }
-            // if nothing is pressed, keep the arm in place. provide enough power that the arm doesn't move up or down
-            // Noted: supply positive number first so the arms won't slide
-            else {
-                leftArm.setPower(0.2);
-                leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            }
-
-            //Same algorithm for right arm
-            if (gamepad2.right_stick_y < 0) {
-                rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                rightArm.setPower(0.4);
-            } else if (gamepad2.right_stick_y > 0) {
-                rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                rightArm.setPower(-0.01);
-            } else {
-                rightArm.setPower(0.2);
-                rightArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            }
-
-
+//        if(gamepad2.right_bumper)
+//        {
+//            if(rightReleased)
+//            {
+//                if(rclosed)
+//                {
+//                    rclosed=false;
+//                }
+//                else
+//                {
+//                    rclosed = true;
+//                }
+//            }
+//            rightReleased = false;
+//        }
+//        else {
+//            rightReleased = true;
+//        }
+//
+//
+//
+//        if(gamepad2.left_bumper)
+//        {
+//            if(leftReleased)
+//            {
+//                if(lclosed)
+//                {
+//                    lclosed=false;
+//                }
+//                else
+//                {
+//                    lclosed = true;
+//                }
+//            }
+//            leftReleased = false;
+//        }
+//        else {
+//            leftReleased = true;
+//        }
+//
+//
+//
+//
+//
+//
+//            if (lclosed) {
+//                leftl.setPosition(lpos_l - close_value);
+//                leftr.setPosition(lpos_r - close_value);
+//                // COMPLETED: add space management code for the right arm
+//            } else {
+//                leftl.setPosition(lpos_l);
+//                leftr.setPosition(lpos_r);
+//                // COMPLETED: add space management code for the right arm
+//            }
+//            if (rclosed) {
+//                rightl.setPosition(rpos_l - close_value);
+//                rightr.setPosition(rpos_r - close_value);
+//                // COMPLETED: add space management code for the right arm
+//            } else {
+//                rightl.setPosition(rpos_l);
+//                rightr.setPosition(rpos_r);
+//                // COMPLETED: add space management code for the right arm
+//            }
+//
+//
+//
+//            // if left joystick is up, move the arm up
+//            if (gamepad2.left_stick_y < 0) {
+//                leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//                leftArm.setPower(0.4);
+//
+//            }
+//            // if left joystick is down, drop the arm down
+//            else if (gamepad2.left_stick_y > 0) {
+//                leftArm.setPower(-0.01);
+//
+//            }
+//            // if nothing is pressed, keep the arm in place. provide enough power that the arm doesn't move up or down
+//            // Noted: supply positive number first so the arms won't slide
+//            else {
+//                leftArm.setPower(0.2);
+//                leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//            }
+//
+//            //Same algorithm for right arm
+//            if (gamepad2.right_stick_y < 0) {
+//                rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//                rightArm.setPower(0.4);
+//            } else if (gamepad2.right_stick_y > 0) {
+//                rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//                rightArm.setPower(-0.01);
+//            } else {
+//                rightArm.setPower(0.2);
+//                rightArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//            }
+//
+//
 
 
             //------------------------------------------------------------------------------------
@@ -355,7 +354,9 @@ public class DriverOp extends OpMode {
                 }
             }
 
-            //telemetries
+
+
+            //Telemetries
             telemetry.addData("Motors", ("left: " + leftPower + "right: " + rightPower));
             telemetry.addData("leftArm Power:     ", leftArm.getPower());
             telemetry.addData("leftArm Position:  ", leftArm.getCurrentPosition());

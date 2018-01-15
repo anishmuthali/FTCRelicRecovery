@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -25,34 +26,47 @@ public class JewelKnockerRed extends LinearOpMode{
         servoUpDown = hardwareMap.get(Servo.class, "servoUpDown");
         servoSide = hardwareMap.get(Servo.class, "servoSide");
 
+
+
         servoUpDown.setDirection(Servo.Direction.REVERSE);
         servoUpDown.setPosition(0.6);
         servoSide.setPosition(0.35);
 
 
+
+
+
         while (opModeIsActive()) {
 
-            sleep(2000);
+            sleep(1000);
+            servoUpDown.setPosition(0.5);
+            sleep(1000);
 
 
-
-            if (colorsensor.blue() < colorsensor.red()) {
-                servoSide.setPosition(0.1);
-                telemetry.addLine("Blue");
-
-            } else {
-                servoSide.setPosition(0.6);
-                telemetry.addLine("Red");
-            }
-
-
-            telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
-            telemetry.addData("servoSide: ", servoSide.getPosition());
             telemetry.addData("Red Value:", colorsensor.red());
             telemetry.addData("Blue Value:", colorsensor.blue());
-            //Commented by Alex on 12/06
-            //uncommented by Nitin on 1/9/18
             telemetry.update();
+            if (colorsensor.blue() < colorsensor.red()) {
+                servoSide.setPosition(0.0);
+                telemetry.addLine("Blue");
+                telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
+                telemetry.addData("servoSide: ", servoSide.getPosition());
+                telemetry.update();
+                sleep(20000);
+
+            } else {
+                servoSide.setPosition(0.8);
+                telemetry.addLine("Red");
+                telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
+                telemetry.addData("servoSide: ", servoSide.getPosition());
+                telemetry.update();
+                sleep(20000);
+
+
+            }
+
         }
+
+
     }
 }
