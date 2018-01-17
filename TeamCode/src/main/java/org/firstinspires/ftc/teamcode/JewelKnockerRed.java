@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
- * Created by Nitin on 1/13/2018.
+ * Created by Alex on 1/13/2018.
  */
 @Autonomous(name = "JewelKnockerRed")
 public class JewelKnockerRed extends LinearOpMode{
@@ -15,7 +15,6 @@ public class JewelKnockerRed extends LinearOpMode{
     private ColorSensor colorsensor = null;
     private Servo servoUpDown = null;
     private Servo servoSide = null;
-
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -25,6 +24,8 @@ public class JewelKnockerRed extends LinearOpMode{
         colorsensor = hardwareMap.get(ColorSensor.class, "colorsensor");
         servoUpDown = hardwareMap.get(Servo.class, "servoUpDown");
         servoSide = hardwareMap.get(Servo.class, "servoSide");
+
+
 
 
 
@@ -52,7 +53,7 @@ public class JewelKnockerRed extends LinearOpMode{
                 telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
                 telemetry.addData("servoSide: ", servoSide.getPosition());
                 telemetry.update();
-                sleep(20000);
+                sleep(2000);
 
             } else {
                 servoSide.setPosition(0.8);
@@ -60,13 +61,17 @@ public class JewelKnockerRed extends LinearOpMode{
                 telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
                 telemetry.addData("servoSide: ", servoSide.getPosition());
                 telemetry.update();
-                sleep(20000);
+                sleep(2000);
 
 
             }
+
 
         }
 
 
     }
+
+
+
 }
