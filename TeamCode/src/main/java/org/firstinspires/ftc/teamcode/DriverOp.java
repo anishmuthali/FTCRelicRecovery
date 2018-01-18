@@ -315,44 +315,28 @@ public class DriverOp extends OpMode {
                 retractMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             }
 
-            if (gamepad1.left_bumper) {
+            if (gamepad1.left_bumper || gamepad2.left_bumper) {
                 retractMotor.setPower(0.2);
-            } else if (gamepad1.right_bumper) {
+            } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
                 retractMotor.setPower(-0.2);
             } else {
                 retractMotor.setPower(0);
             }
 
-            if (gamepad1.left_trigger != 0) {
+            if (gamepad1.left_trigger != 0 || gamepad2.left_trigger != 0) {
                 extendMotor.setPower(0.3);
-            } else if (gamepad1.right_trigger != 0) {
+            } else if (gamepad1.right_trigger != 0 || gamepad2.right_trigger != 0) {
                 extendMotor.setPower(-0.3);
             } else {
                 extendMotor.setPower(0);
             }
-        
 
-        if (gamepad2.left_bumper) {
-            retractMotor.setPower(0.2);
-        } else if (gamepad2.right_bumper) {
-            retractMotor.setPower(-0.2);
-        } else {
-            retractMotor.setPower(0);
-        }
-
-        if (gamepad2.left_trigger != 0) {
-            extendMotor.setPower(0.3);
-        } else if (gamepad2.right_trigger != 0) {
-            extendMotor.setPower(-0.3);
-        } else {
-            extendMotor.setPower(0);
-        }
 
             if (pressed) {
-                if (!gamepad2.a)
+                if (!gamepad2.a && !gamepad1.a)
                     pressed = false;
             } else {
-                if (gamepad2.a) {
+                if (gamepad2.a || gamepad1.a) {
                     if (!closed) {
                         //closing the servo
                         servo1.setDirection(Servo.Direction.FORWARD);
