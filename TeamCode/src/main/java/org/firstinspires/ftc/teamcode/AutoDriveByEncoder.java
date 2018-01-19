@@ -63,9 +63,9 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Pushbot: Auto Drive By Encoder", group="Pushbot")
+@Autonomous(name="Auto Drive By Encoder", group="Pushbot")
 //@Disabled
-public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
+public class AutoDriveByEncoder extends LinearOpMode {
 
     /* Declare OpMode members. */
         HardWareMap         robot   = new HardWareMap();   // Use a Pushbot's hardware
@@ -92,10 +92,10 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
 
-        robot.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
 
@@ -110,8 +110,10 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  28,  28, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+        encoderDrive(TURN_SPEED,   -10, 10, 4.0);
+        encoderDrive(DRIVE_SPEED,  10,  10, 5.0);
+        encoderDrive(TURN_SPEED,   4, -4, 4.0);
+        encoderDrive(DRIVE_SPEED,  5,  5, 5.0);
 
 
         telemetry.addData("Path", "Complete");
