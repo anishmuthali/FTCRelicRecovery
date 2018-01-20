@@ -153,8 +153,8 @@ public class DriverOp extends OpMode {
 
         //Code for Wheels
 
-        double leftPower = -0.6 * (gamepad1.right_stick_y);
-        double rightPower = -0.6 * (gamepad1.left_stick_y);
+        double rightPower = -0.6 * (gamepad1.right_stick_y);
+        double leftPower = -0.6 * (gamepad1.left_stick_y);
 
 
         // Set speed of motor
@@ -168,23 +168,17 @@ public class DriverOp extends OpMode {
 
             // Get data from controllers
             if (slowMode) {
-                leftPower = -0.3 * (gamepad1.right_stick_y);
-                rightPower = -0.3 * (gamepad1.left_stick_y);
+                rightPower = -0.3 * (gamepad1.right_stick_y);
+                leftPower = -0.3 * (gamepad1.left_stick_y);
                 telemetry.addLine("Slow Mode");
             } else if (fastMode) {
-                leftPower = -0.75 * (gamepad1.right_stick_y);
-                rightPower = -0.75 * (gamepad1.left_stick_y);
+                rightPower = -0.75 * (gamepad1.right_stick_y);
+                leftPower = -0.75 * (gamepad1.left_stick_y);
                 telemetry.addLine("Fast Mode");
             }
 
 
-/*
-        // Limit values of left and right power
-        Range.clip(leftPower, -1.0, 1.0);
-        Range.clip(rightPower, -1.0, 1.0);
-        (Commented by Alex on 11/28)
-        (Reason: Don't know what it's for!)
-*/
+
             // Set power of all motors
             frontLeft.setPower(leftPower);
             backLeft.setPower(leftPower);
@@ -268,31 +262,6 @@ public class DriverOp extends OpMode {
 //            }
 //              */
 //
-//
-            //if left joystick is up, move the arm up
-            if (gamepad2.left_stick_y < 0) {
-                leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                rightArm.setPower(0.4);
-                leftArm.setPower(0.4);
-
-            }
-            // if left joystick is down, drop the arm down
-            else if (gamepad2.left_stick_y > 0) {
-                leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                leftArm.setPower(-0.01);
-                rightArm.setPower(-0.01);
-
-            }
-            // if nothing is pressed, keep the arm in place. provide enough power that the arm doesn't move up or down
-            // Noted: supply positive number first so the arms won't slide
-            else {
-                leftArm.setPower(0.2);
-                leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                rightArm.setPower(0.2);
-                rightArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            }
 //
 //            //Same algorithm for right arm
 //            if (gamepad2.right_stick_y < 0) {
