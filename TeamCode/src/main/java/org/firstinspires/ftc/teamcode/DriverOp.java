@@ -266,26 +266,33 @@ public class DriverOp extends OpMode {
 //                rightr.setPosition(rpos_r);
 //                // COMPLETED: add space management code for the right arm
 //            }
+//              */
 //
 //
-//
-//            // if left joystick is up, move the arm up
-//            if (gamepad2.left_stick_y < 0) {
-//                leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//                leftArm.setPower(0.4);
-//
-//            }
-//            // if left joystick is down, drop the arm down
-//            else if (gamepad2.left_stick_y > 0) {
-//                leftArm.setPower(-0.01);
-//
-//            }
-//            // if nothing is pressed, keep the arm in place. provide enough power that the arm doesn't move up or down
-//            // Noted: supply positive number first so the arms won't slide
-//            else {
-//                leftArm.setPower(0.2);
-//                leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//            }
+            //if left joystick is up, move the arm up
+            if (gamepad2.left_stick_y < 0) {
+                leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightArm.setPower(0.4);
+                leftArm.setPower(0.4);
+
+            }
+            // if left joystick is down, drop the arm down
+            else if (gamepad2.left_stick_y > 0) {
+                leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                leftArm.setPower(-0.01);
+                rightArm.setPower(-0.01);
+
+            }
+            // if nothing is pressed, keep the arm in place. provide enough power that the arm doesn't move up or down
+            // Noted: supply positive number first so the arms won't slide
+            else {
+                leftArm.setPower(0.2);
+                leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                rightArm.setPower(0.2);
+                rightArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
 //
 //            //Same algorithm for right arm
 //            if (gamepad2.right_stick_y < 0) {
@@ -298,8 +305,8 @@ public class DriverOp extends OpMode {
 //                rightArm.setPower(0.2);
 //                rightArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //            }
-//
-//
+
+
 
 
             //------------------------------------------------------------------------------------
