@@ -63,11 +63,8 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/PushbotAutoDriveByEncoder_Linear.java
-@Autonomous(name="Pushbot: Auto Drive By Encoder", group="Autonomous")
-=======
+
 @Autonomous(name="Auto Drive By Encoder", group="Pushbot")
->>>>>>> e602c090f62b237f5edec19a300dacc7dc1039db:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/AutoDriveByEncoder.java
 //@Disabled
 public class AutoDriveByEncoder extends LinearOpMode {
 
