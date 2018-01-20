@@ -77,42 +77,6 @@ public class HardWareMap
 
 
     }
-    public void init(HardwareMap hardwareMap,DcMotor.RunMode runmode) {
-        // Save reference to Hardware map
-        this.hardwareMap = hardwareMap;
 
-        // Define and Initialize Motors
-        //Initialization for Wheels:
-        // Find motors on hardware map
-        frontLeft = hardwareMap.get(DcMotor.class, "front_left");
-        frontRight = hardwareMap.get(DcMotor.class, "front_right");
-        backLeft = hardwareMap.get(DcMotor.class, "back_left");
-        backRight = hardwareMap.get(DcMotor.class, "back_right");
-        /*
-        * Set direction of motors
-        * Right: reversed
-        * Left: forward (normal)
-        * (reversed on 12/7)
-        */
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.FORWARD);
-
-        // Set all motors to zero power
-        frontLeft.setPower(0);
-        backLeft.setPower(0);
-        frontRight.setPower(0);
-        backRight.setPower(0);
-
-        // Set all motors to run without encoders.
-        // May want to use RUN_USING_ENCODERS if encoders are installed.
-        frontLeft.setMode(runmode);
-        backLeft.setMode(runmode);
-        frontRight.setMode(runmode);
-        backRight.setMode(runmode);
-
-
-    }
 }
 
