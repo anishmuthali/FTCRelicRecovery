@@ -22,14 +22,14 @@ public class EncoderValues extends OpMode {
         backRight = hardwareMap.get(DcMotor.class, "back_right");
     }
 
+    // backwards movement: L = 2151, R = -183
+
     @Override
     public void loop() {
         telemetry.clear();
         telemetry.update();
         double leftPower = -0.3 * (gamepad1.right_stick_y);
         double rightPower = -0.3 * (gamepad1.left_stick_y);
-        Range.clip(leftPower, -1.0, 1.0);
-        Range.clip(rightPower, -1.0, 1.0);
         frontLeft.setPower(leftPower);
         backLeft.setPower(leftPower);
         frontRight.setPower(rightPower);
