@@ -248,27 +248,29 @@ public class DriverOp extends OpMode {
 //
 //
 //
-//            if (lclosed) {
-//                leftl.setPosition(lpos_l - close_value);
-//                leftr.setPosition(lpos_r - close_value);
-//                // COMPLETED: add space management code for the right arm
-//            } else {
-//                leftl.setPosition(lpos_l);
-//                leftr.setPosition(lpos_r);
-//                // COMPLETED: add space management code for the right arm
-//            }
-//            if (rclosed) {
-//                rightl.setPosition(rpos_l - close_value);
-//                rightr.setPosition(rpos_r - close_value);
-//                // COMPLETED: add space management code for the right arm
-//            } else {
-//                rightl.setPosition(rpos_l);
-//                rightr.setPosition(rpos_r);
-//                // COMPLETED: add space management code for the right arm
-//            }
-//              */
-//
-//
+
+
+            if (lclosed) {
+                leftl.setPosition(lpos_l - close_value);
+                leftr.setPosition(lpos_r - close_value);
+                // COMPLETED: add space management code for the right arm
+            } else {
+                leftl.setPosition(lpos_l);
+                leftr.setPosition(lpos_r);
+                // COMPLETED: add space management code for the right arm
+            }
+            if (rclosed) {
+                rightl.setPosition(rpos_l - close_value);
+                rightr.setPosition(rpos_r - close_value);
+                // COMPLETED: add space management code for the right arm
+            } else {
+                rightl.setPosition(rpos_l);
+                rightr.setPosition(rpos_r);
+                // COMPLETED: add space management code for the right arm
+            }
+
+
+
             //if left joystick is up, move the arm up
             if (gamepad2.left_stick_y < 0) {
                 leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
