@@ -28,15 +28,10 @@ public class EncoderValues extends OpMode {
     public void loop() {
         telemetry.clear();
         telemetry.update();
-<<<<<<< HEAD
-        double leftPower = -0.1 * (gamepad1.right_stick_y);
-        double rightPower = -0.1 * (gamepad1.left_stick_y);
-        Range.clip(leftPower, -1.0, 1.0);
-        Range.clip(rightPower, -1.0, 1.0);
-=======
+        
         double leftPower = 0.4 * (gamepad1.right_stick_y);
         double rightPower = -0.4 * (gamepad1.left_stick_y);
->>>>>>> ad875bcdf5fef07ac33796c36c4745c05c93a0cf
+
         frontLeft.setPower(leftPower);
         backLeft.setPower(leftPower);
         frontRight.setPower(rightPower);
