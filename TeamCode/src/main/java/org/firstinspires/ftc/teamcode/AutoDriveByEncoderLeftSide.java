@@ -63,6 +63,7 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
+
 @Autonomous(name="Auto Drive By Encoder", group="Pushbot")
 //@Disabled
 public class AutoDriveByEncoderLeftSide extends LinearOpMode {
@@ -105,7 +106,7 @@ public class AutoDriveByEncoderLeftSide extends LinearOpMode {
 
 
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0",  "Starting at %7d :%7d",
+        telemetry.addData("Path0",  "Starting at %7d:%7d",
                 robot.frontLeft.getCurrentPosition(),
                 robot.frontRight.getCurrentPosition());
         telemetry.update();
@@ -136,19 +137,24 @@ public class AutoDriveByEncoderLeftSide extends LinearOpMode {
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
-        int newLeftTarget;
-        int newRightTarget;
+        int newFrontLeftTarget;
+        int newFrontRightTarget;
+        int newBackLeftTarget;
+        int newBackRightTarget;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.frontLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.frontRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            robot.frontLeft.setTargetPosition(newLeftTarget);
-            robot.backLeft.setTargetPosition(newLeftTarget);
-            robot.backRight.setTargetPosition(newRightTarget);
-            robot.frontRight.setTargetPosition(newRightTarget);
+            newFrontLeftTarget = robot.frontLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newFrontRightTarget = robot.frontRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            newBackRightTarget = robot.backRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            newBackLeftTarget = robot.backLeft.getCurrentPosition()+ (int)(rightInches * COUNTS_PER_INCH);
+
+            robot.backRight.setTargetPosition(newBackRightTarget);
+            robot.frontLeft.setTargetPosition(newFrontLeftTarget);
+            robot.backLeft.setTargetPosition(newBackLeftTarget);
+            robot.frontRight.setTargetPosition(newFrontRightTarget);
 
             // Turn On RUN_TO_POSITION
             robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -175,10 +181,10 @@ public class AutoDriveByEncoderLeftSide extends LinearOpMode {
                     (robot.frontRight.isBusy() && robot.frontLeft.isBusy()&& robot.backLeft.isBusy()&& robot.backRight.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
-                telemetry.addData("Path2",  "Running at %7d :%7d",
-                        robot.frontRight.getCurrentPosition(),
-                        robot.frontLeft.getCurrentPosition());
+                telemetry.addData("Path1",  "Running to %7d : %7d", newFrontLeftTarget,  newFrontRightTarget);
+                telemetry.addData("Path2",  "Running at %7d : %7d",
+                        robot.frontLeft.getCurrentPosition(),
+                        robot.frontRight.getCurrentPosition());
                 telemetry.update();
             }
 
