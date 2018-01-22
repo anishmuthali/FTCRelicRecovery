@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by anishmuthali on 1/21/18.
  */
 @TeleOp(name="ClawTester")
+@Disabled
 public class ClawTester extends OpMode {
     private Servo leftClaw;
     private Servo rightClaw;

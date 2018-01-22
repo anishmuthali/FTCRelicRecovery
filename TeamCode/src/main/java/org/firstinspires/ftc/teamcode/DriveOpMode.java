@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Created by anishmuthali on 9/27/17.
  */
 @TeleOp(name="DriveOpMode", group="OpMode")
-//@Disabled
+@Disabled
 public class DriveOpMode extends OpMode{
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor frontLeft = null;
