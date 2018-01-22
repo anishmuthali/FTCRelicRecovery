@@ -17,10 +17,10 @@ public class AutonomousMovementTest extends OpMode {
     private DcMotor backRight = null;
     private boolean robotMovedBack = false;
     private boolean robotPointTurned = false;
-    private int MOVE_BACK_ENCODER_VALUE = 1400;
-    private int POINT_TURN_ENCODER_VALUE_RIGHT = -5000;
-    private int POINT_TURN_ENCODER_VALUE_LEFT = 2700;
-    private double MOTOR_POWER = 0.4;
+    private final int MOVE_BACK_ENCODER_VALUE = 1400;
+    private final int POINT_TURN_ENCODER_VALUE_RIGHT = -5000;
+    private final int POINT_TURN_ENCODER_VALUE_LEFT = 2700;
+    private final double MOTOR_POWER = 0.4;
 
     @Override
     public void init() {
@@ -33,6 +33,7 @@ public class AutonomousMovementTest extends OpMode {
         backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -44,14 +45,11 @@ public class AutonomousMovementTest extends OpMode {
         if(!robotMovedBack){
             moveRobotBack();
         }
-        else if(!robotPointTurned){
-            pointTurnRobot();
-        }
-
     }
 
+    // Method to move the motors using encoders to the area right in front of the glyph towers
+    // TODO: Test this code again to check if it still works after the phone position has been swapped
     public void moveRobotBack(){
-
         frontLeft.setTargetPosition(MOVE_BACK_ENCODER_VALUE);
         backLeft.setTargetPosition(MOVE_BACK_ENCODER_VALUE);
         frontRight.setTargetPosition(-MOVE_BACK_ENCODER_VALUE);
@@ -72,6 +70,7 @@ public class AutonomousMovementTest extends OpMode {
 
     }
 
+    // DO NOT USE THIS CODE! IT'S BUGGY AND VERY DANGEROUS!
     public void pointTurnRobot(){
         frontLeft.setTargetPosition(POINT_TURN_ENCODER_VALUE_LEFT);
         frontRight.setTargetPosition(POINT_TURN_ENCODER_VALUE_RIGHT);

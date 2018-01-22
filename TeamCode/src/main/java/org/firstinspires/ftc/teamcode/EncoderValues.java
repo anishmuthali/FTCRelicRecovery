@@ -28,7 +28,7 @@ public class EncoderValues extends OpMode {
     public void loop() {
         telemetry.clear();
         telemetry.update();
-        
+
         double leftPower = 0.4 * (gamepad1.right_stick_y);
         double rightPower = -0.4 * (gamepad1.left_stick_y);
 
