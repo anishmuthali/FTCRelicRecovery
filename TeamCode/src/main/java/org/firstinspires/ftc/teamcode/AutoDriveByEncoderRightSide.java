@@ -63,7 +63,7 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Drive By Encoder", group="Pushbot")
+@Autonomous(name="Auto Drive By Encoder right stone", group="Pushbot")
 //@Disabled
 public class AutoDriveByEncoderRightSide extends LinearOpMode {
 

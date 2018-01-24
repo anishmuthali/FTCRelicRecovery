@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import static java.lang.Thread.sleep;
 //import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /**
@@ -32,6 +34,7 @@ public class DriverOp extends OpMode {
 //    final int rRIGHT = 727;
     private boolean slowMode = false;
     private boolean fastMode = false;
+    private boolean normalMode = true;
     boolean rclosed = true;
     boolean rightReleased = true;
     boolean lclosed = true;
@@ -122,34 +125,50 @@ public class DriverOp extends OpMode {
 
 
         //Code for Servos
+        servoSide.setPosition(0.2);
+        try {
+            sleep(250);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         servoUpDown.setDirection(Servo.Direction.REVERSE);
         servoUpDown.setPosition(0.3);
-        servoSide.setPosition(0.35);
+
 
 
         //Code for Wheels
 
-        double leftPower = -0.6 * (gamepad1.right_stick_y);
-        double rightPower = -0.6 * (gamepad1.left_stick_y);
+        double leftPower = -0.3 * (gamepad1.right_stick_y);
+        double rightPower = -0.3 * (gamepad1.left_stick_y);
 
 
         // Set speed of motor
-        if (gamepad1.x) {
+        if (gamepad1.b) {
+            slowMode = false;
+            fastMode = false;
+            normalMode = true;
+        } else if (gamepad1.x) {
             slowMode = false;
             fastMode = true;
+            normalMode = false;
         } else if (gamepad1.y) {
             slowMode = true;
             fastMode = false;
+            normalMode = false;
         }
 
         // Get data from controllers
-        if (slowMode) {
+        if (normalMode) {
             leftPower = -0.3 * (gamepad1.right_stick_y);
             rightPower = -0.3 * (gamepad1.left_stick_y);
+            telemetry.addLine("Normal Mode");
+        }else if (slowMode) {
+            leftPower = -0.15 * (gamepad1.right_stick_y);
+            rightPower = -0.15 * (gamepad1.left_stick_y);
             telemetry.addLine("Slow Mode");
         } else if (fastMode) {
-            leftPower = -0.75 * (gamepad1.right_stick_y);
-            rightPower = -0.75 * (gamepad1.left_stick_y);
+            leftPower = -0.45 * (gamepad1.right_stick_y);
+            rightPower = -0.45 * (gamepad1.left_stick_y);
             telemetry.addLine("Fast Mode");
         }
 
@@ -251,7 +270,7 @@ public class DriverOp extends OpMode {
                 if (!closed) {
                     //closing the servo
                     servo1.setDirection(Servo.Direction.FORWARD);
-                    servo1.setPosition(0.1);
+                    servo1.setPosition(0.08);
                     closed = true;
                     telemetry.addLine("closed");
                 } else {
@@ -281,6 +300,8 @@ public class DriverOp extends OpMode {
         telemetry.addData("rightClosed: ", rclosed);
         telemetry.addData("leftClosed: ", lclosed);
         telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
+        telemetry.addData("leftClaw", leftClaw.getPosition());
+        telemetry.addData("rightClaw", rightClaw.getPosition());
         telemetry.addData("servoSide: ", servoSide.getPosition());
         telemetry.addData("Runtime:", getRuntime());
 

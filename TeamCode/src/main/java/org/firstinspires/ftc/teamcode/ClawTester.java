@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by anishmuthali on 1/21/18.
  */
 @TeleOp(name="ClawTester")
-@Disabled
+//@Disabled
 public class ClawTester extends OpMode {
     private Servo leftClaw;
     private Servo rightClaw;

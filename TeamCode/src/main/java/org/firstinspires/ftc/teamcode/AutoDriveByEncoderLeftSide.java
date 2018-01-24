@@ -64,7 +64,7 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
  */
 
 
-@Autonomous(name="Auto Drive By Encoder", group="Pushbot")
+@Autonomous(name="Auto Drive By Encoder left stone", group="Pushbot")
 //@Disabled
 public class AutoDriveByEncoderLeftSide extends LinearOpMode {
 
