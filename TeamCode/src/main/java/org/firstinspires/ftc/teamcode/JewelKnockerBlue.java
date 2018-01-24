@@ -34,11 +34,14 @@ public class JewelKnockerBlue extends LinearOpMode{
         rightClaw.setPosition(0.5);
         leftClaw.setPosition(0.5);
 
-
-
+        servoSide.setDirection(Servo.Direction.REVERSE);
+        servoSide.setPosition(0.1);
+        sleep(3000);
         servoUpDown.setDirection(Servo.Direction.REVERSE);
         servoUpDown.setPosition(0.6);
-        servoSide.setPosition(0.2);
+
+
+
 
 
 
@@ -55,7 +58,7 @@ public class JewelKnockerBlue extends LinearOpMode{
             telemetry.addData("Blue Value:", colorsensor.blue());
             telemetry.update();
             if (colorsensor.blue() > colorsensor.red()) {
-                servoSide.setPosition(0.0);
+                //servoSide.setPosition(0.0);
                 telemetry.addLine("Blue");
                 telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
                 telemetry.addData("servoSide: ", servoSide.getPosition());
@@ -63,7 +66,7 @@ public class JewelKnockerBlue extends LinearOpMode{
                 sleep(20000);
 
             } else {
-                servoSide.setPosition(0.8);
+                //servoSide.setPosition(0.8);
                 telemetry.addLine("Red");
                 telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
                 telemetry.addData("servoSide: ", servoSide.getPosition());
