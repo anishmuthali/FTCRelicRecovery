@@ -26,6 +26,7 @@ public class jewelServoTest extends OpMode{
 
 
         servoUpDown.setDirection(Servo.Direction.REVERSE);
+        servoSide.setDirection(Servo.Direction.REVERSE);
         servoUpDown.setPosition(0.6);
         servoSide.setPosition(0.35);
     }

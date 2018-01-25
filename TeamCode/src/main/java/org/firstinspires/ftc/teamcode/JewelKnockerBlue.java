@@ -34,11 +34,10 @@ public class JewelKnockerBlue extends LinearOpMode{
         rightClaw.setPosition(0.5);
         leftClaw.setPosition(0.5);
 
-        servoSide.setDirection(Servo.Direction.REVERSE);
         servoSide.setPosition(0.1);
         sleep(3000);
         servoUpDown.setDirection(Servo.Direction.REVERSE);
-        servoUpDown.setPosition(0.6);
+        servoUpDown.setPosition(0.5);
 
 
 
