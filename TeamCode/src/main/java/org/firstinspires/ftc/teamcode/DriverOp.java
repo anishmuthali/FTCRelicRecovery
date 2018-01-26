@@ -167,8 +167,8 @@ public class DriverOp extends OpMode {
             rightPower = -0.15 * (gamepad1.left_stick_y);
             telemetry.addLine("Slow Mode");
         } else if (fastMode) {
-            leftPower = -0.45 * (gamepad1.right_stick_y);
-            rightPower = -0.45 * (gamepad1.left_stick_y);
+            leftPower = -0.4 * (gamepad1.right_stick_y);
+            rightPower = -0.4 * (gamepad1.left_stick_y);
             telemetry.addLine("Fast Mode");
         }
 
