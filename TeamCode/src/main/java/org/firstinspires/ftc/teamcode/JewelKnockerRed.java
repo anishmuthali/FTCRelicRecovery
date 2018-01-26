@@ -15,6 +15,8 @@ public class JewelKnockerRed extends LinearOpMode{
     private ColorSensor colorsensor = null;
     private Servo servoUpDown = null;
     private Servo servoSide = null;
+    private Servo rightClaw;
+    private Servo leftClaw;
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -24,20 +26,26 @@ public class JewelKnockerRed extends LinearOpMode{
         colorsensor = hardwareMap.get(ColorSensor.class, "colorsensor");
         servoUpDown = hardwareMap.get(Servo.class, "servoUpDown");
         servoSide = hardwareMap.get(Servo.class, "servoSide");
+        rightClaw = hardwareMap.servo.get("right");
+        leftClaw = hardwareMap.servo.get("left");
 
+
+        rightClaw.setPosition(0.5);
+        leftClaw.setPosition(0.5);
 
 
 
 
         servoUpDown.setDirection(Servo.Direction.REVERSE);
+        servoSide.setPosition(0.5);
+        sleep(3000);
         servoUpDown.setPosition(0.6);
-        servoSide.setPosition(0.35);
 
 
 
 
 
-        while (opModeIsActive()) {
+        //while (opModeIsActive()) {
 
             sleep(1000);
             servoUpDown.setPosition(0.5);
@@ -67,7 +75,7 @@ public class JewelKnockerRed extends LinearOpMode{
             }
 
 
-        }
+        //}
 
 
     }

@@ -18,6 +18,10 @@ public class JewelKnockerBlue extends LinearOpMode{
     private Servo rightClaw;
     private Servo leftClaw;
 
+    // CENTER = 0.4
+    // RIGHT = 0.55
+    // LEFT = 0.25
+
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -33,12 +37,10 @@ public class JewelKnockerBlue extends LinearOpMode{
 
         rightClaw.setPosition(0.5);
         leftClaw.setPosition(0.5);
-
-        servoSide.setDirection(Servo.Direction.REVERSE);
-        servoSide.setPosition(0.1);
-        sleep(3000);
         servoUpDown.setDirection(Servo.Direction.REVERSE);
-        servoUpDown.setPosition(0.6);
+        servoUpDown.setPosition(0.1);
+        servoUpDown.setPosition(servoUpDown.getPosition() + 0.5);
+        servoSide.setPosition(0.575);
 
 
 
@@ -47,10 +49,9 @@ public class JewelKnockerBlue extends LinearOpMode{
 
 
 
-        while (opModeIsActive()) {
+        //while (opModeIsActive()) {
 
-            sleep(1000);
-            servoUpDown.setPosition(0.5);
+
             sleep(1000);
 
 
@@ -58,7 +59,7 @@ public class JewelKnockerBlue extends LinearOpMode{
             telemetry.addData("Blue Value:", colorsensor.blue());
             telemetry.update();
             if (colorsensor.blue() > colorsensor.red()) {
-                //servoSide.setPosition(0.0);
+                servoSide.setPosition(0.0);
                 telemetry.addLine("Blue");
                 telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
                 telemetry.addData("servoSide: ", servoSide.getPosition());
@@ -66,7 +67,7 @@ public class JewelKnockerBlue extends LinearOpMode{
                 sleep(20000);
 
             } else {
-                //servoSide.setPosition(0.8);
+                servoSide.setPosition(0.8);
                 telemetry.addLine("Red");
                 telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
                 telemetry.addData("servoSide: ", servoSide.getPosition());
@@ -76,8 +77,6 @@ public class JewelKnockerBlue extends LinearOpMode{
 
             }
 
-        }
-
-
+        //}
     }
 }

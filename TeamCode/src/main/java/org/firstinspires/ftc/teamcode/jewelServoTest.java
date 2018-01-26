@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -9,8 +10,8 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by Nitin on 1/23/2018.
  */
 
-@Autonomous
-public class jewelServoTest extends OpMode{
+@TeleOp(name="JewelServoTest")
+public class jewelServoTest extends OpMode {
 
     private ColorSensor colorsensor = null;
     private Servo servoUpDown = null;
@@ -25,14 +26,24 @@ public class jewelServoTest extends OpMode{
 
 
 
-        servoUpDown.setDirection(Servo.Direction.REVERSE);
+//        servoUpDown.setDirection(Servo.Direction.REVERSE);
+//        servoUpDown.setPosition(0.6);
+        //servoSide.setPosition(0.35);
+        servoSide.setDirection(Servo.Direction.REVERSE);
         servoUpDown.setPosition(0.6);
-        servoSide.setPosition(0.35);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        servoUpDown.setPosition(0.5);
+        servoSide.setPosition(0);
+        telemetry.addData("servoSide", servoSide.getPosition());
     }
 
     @Override
     public void loop() {
-
+        servoSide.setPosition(0.5);
         if(gamepad1.right_stick_y < 0) {
             servoUpDown.setPosition(servoUpDown.getPosition() + 0.01);
         } else if(gamepad1.right_stick_y > 0) {

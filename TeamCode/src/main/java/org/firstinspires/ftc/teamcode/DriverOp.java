@@ -138,8 +138,8 @@ public class DriverOp extends OpMode {
 
         //Code for Wheels
 
-        double leftPower = -0.3 * (gamepad1.right_stick_y);
-        double rightPower = -0.3 * (gamepad1.left_stick_y);
+        double leftPower = -0.25 * (gamepad1.right_stick_y);
+        double rightPower = -0.25 * (gamepad1.left_stick_y);
 
 
         // Set speed of motor
@@ -159,8 +159,8 @@ public class DriverOp extends OpMode {
 
         // Get data from controllers
         if (normalMode) {
-            leftPower = -0.3 * (gamepad1.right_stick_y);
-            rightPower = -0.3 * (gamepad1.left_stick_y);
+            leftPower = -0.25 * (gamepad1.right_stick_y);
+            rightPower = -0.25 * (gamepad1.left_stick_y);
             telemetry.addLine("Normal Mode");
         }else if (slowMode) {
             leftPower = -0.15 * (gamepad1.right_stick_y);
@@ -192,13 +192,13 @@ public class DriverOp extends OpMode {
 
         //if left joystick is up, move the arm up
         if (gamepad2.dpad_up) {
-            leftArm.setPower(0.4);
-            rightArm.setPower(0.4);
+            leftArm.setPower(0.6);
+            rightArm.setPower(0.6);
         }
         // if left joystick is down, drop the arm down
         else if (gamepad2.dpad_down) {
-            leftArm.setPower(-0.01);
-            rightArm.setPower(-0.01);
+            leftArm.setPower(-0.1);
+            rightArm.setPower(-0.1);
         }
         else{
             rightArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -208,20 +208,20 @@ public class DriverOp extends OpMode {
         }
 
         // Code for controlling the claw
-        if(gamepad2.left_stick_x > 0){
+        if(gamepad2.right_stick_x > 0){
             rightClaw.setPosition(0);
         }
-        else if(gamepad2.left_stick_x < 0){
+        else if(gamepad2.right_stick_x < 0){
             rightClaw.setPosition(1);
         }
         else{
             rightClaw.setPosition(0.5);
         }
 
-        if(gamepad2.right_stick_x > 0){
+        if(gamepad2.left_stick_x > 0){
             leftClaw.setPosition(0);
         }
-        else if(gamepad2.right_stick_x < 0){
+        else if(gamepad2.left_stick_x < 0){
             leftClaw.setPosition(1);
         }
         else{
