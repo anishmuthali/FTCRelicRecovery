@@ -115,10 +115,11 @@ public class AutoDriveByEncoderRightSide extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
+        encoderDrive(DRIVE_SPEED,  23,  23, 5.0);
         encoderDrive(TURN_SPEED,   -10, 10, 4.0);
-        encoderDrive(DRIVE_SPEED,  15,  15, 5.0);
-        encoderDrive(TURN_SPEED,   5, -5, 4.0);
-        encoderDrive(DRIVE_SPEED,  15,  15, 5.0);
+        encoderDrive(DRIVE_SPEED,  16,  16, 5.0);
+        encoderDrive(TURN_SPEED,   10, -10, 4.0);
+        encoderDrive(DRIVE_SPEED,  16,  16, 5.0);
 
 
         telemetry.addData("Path", "Complete");

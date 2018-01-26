@@ -18,6 +18,8 @@ public class JewelKnockerRed extends LinearOpMode{
     private Servo rightClaw;
     private Servo leftClaw;
 
+
+
     @Override
     public void runOpMode() throws InterruptedException
     {
@@ -37,8 +39,9 @@ public class JewelKnockerRed extends LinearOpMode{
 
 
         servoUpDown.setDirection(Servo.Direction.REVERSE);
+        servoUpDown.setPosition(0.2);
         servoSide.setPosition(0.5);
-        sleep(3000);
+        sleep(1000);
         servoUpDown.setPosition(0.6);
 
 
@@ -55,7 +58,7 @@ public class JewelKnockerRed extends LinearOpMode{
             telemetry.addData("Red Value:", colorsensor.red());
             telemetry.addData("Blue Value:", colorsensor.blue());
             telemetry.update();
-            if (colorsensor.blue() < colorsensor.red()) {
+            if (colorsensor.blue() > colorsensor.red()) {
                 servoSide.setPosition(0.0);
                 telemetry.addLine("Blue");
                 telemetry.addData("servoUpDown: ", servoUpDown.getPosition());

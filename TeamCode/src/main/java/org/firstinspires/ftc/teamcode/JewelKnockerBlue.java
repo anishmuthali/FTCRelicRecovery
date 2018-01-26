@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
- * Created by Nitin on 1/13/2018.
+ * Created by Alex on 1/13/2018.
  */
 @Autonomous(name = "JewelKnockerBlue")
 public class JewelKnockerBlue extends LinearOpMode{
@@ -18,9 +18,6 @@ public class JewelKnockerBlue extends LinearOpMode{
     private Servo rightClaw;
     private Servo leftClaw;
 
-    // CENTER = 0.4
-    // RIGHT = 0.55
-    // LEFT = 0.25
 
 
     @Override
@@ -37,13 +34,15 @@ public class JewelKnockerBlue extends LinearOpMode{
 
         rightClaw.setPosition(0.5);
         leftClaw.setPosition(0.5);
+
+
+
+
         servoUpDown.setDirection(Servo.Direction.REVERSE);
-        servoUpDown.setPosition(0.1);
-        servoUpDown.setPosition(servoUpDown.getPosition() + 0.5);
-        servoSide.setPosition(0.575);
-
-
-
+        servoUpDown.setPosition(0.2);
+        servoSide.setPosition(0.5);
+        sleep(1000);
+        servoUpDown.setPosition(0.6);
 
 
 
@@ -51,32 +50,39 @@ public class JewelKnockerBlue extends LinearOpMode{
 
         //while (opModeIsActive()) {
 
+        sleep(1000);
+        servoUpDown.setPosition(0.5);
+        sleep(1000);
 
-            sleep(1000);
 
-
-            telemetry.addData("Red Value:", colorsensor.red());
-            telemetry.addData("Blue Value:", colorsensor.blue());
+        telemetry.addData("Red Value:", colorsensor.red());
+        telemetry.addData("Blue Value:", colorsensor.blue());
+        telemetry.update();
+        if (colorsensor.blue() < colorsensor.red()) {
+            servoSide.setPosition(0.0);
+            telemetry.addLine("Blue");
+            telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
+            telemetry.addData("servoSide: ", servoSide.getPosition());
             telemetry.update();
-            if (colorsensor.blue() > colorsensor.red()) {
-                servoSide.setPosition(0.0);
-                telemetry.addLine("Blue");
-                telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
-                telemetry.addData("servoSide: ", servoSide.getPosition());
-                telemetry.update();
-                sleep(20000);
+            sleep(2000);
 
-            } else {
-                servoSide.setPosition(0.8);
-                telemetry.addLine("Red");
-                telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
-                telemetry.addData("servoSide: ", servoSide.getPosition());
-                telemetry.update();
-                sleep(20000);
+        } else {
+            servoSide.setPosition(0.8);
+            telemetry.addLine("Red");
+            telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
+            telemetry.addData("servoSide: ", servoSide.getPosition());
+            telemetry.update();
+            sleep(2000);
 
 
-            }
+        }
+
 
         //}
+
+
     }
+
+
+
 }
