@@ -243,7 +243,7 @@ public class AutonomousLeft extends LinearOpMode {
         }
 
         telemetry.update();
-        encoderDrive(TURN_SPEED,   -4.4 ,4.4, 4.0);
+        encoderDrive(TURN_SPEED,   4.6 ,-4.6, 4.0);
         encoderDrive(DRIVE_SPEED,  1.25,  1.25, 4.0);
 
 

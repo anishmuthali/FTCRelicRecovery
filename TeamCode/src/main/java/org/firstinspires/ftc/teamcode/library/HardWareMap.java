@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.library;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -28,6 +29,12 @@ public class HardWareMap
     public DcMotor frontRight = null;
     public DcMotor backLeft = null;
     public DcMotor backRight = null;
+    public ColorSensor colorsensor = null;
+    public Servo servoUpDown = null;
+    public Servo servoSide = null;
+    public Servo rightClaw;
+    public Servo leftClaw;
+
 
 
     /* local OpMode members. */
@@ -74,6 +81,20 @@ public class HardWareMap
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
+        //Declaration for JewelKnocker
+        colorsensor = hardwareMap.get(ColorSensor.class, "colorsensor");
+        servoUpDown = hardwareMap.get(Servo.class, "servoUpDown");
+        servoSide = hardwareMap.get(Servo.class, "servoSide");
+        rightClaw = hardwareMap.servo.get("right");
+        leftClaw = hardwareMap.servo.get("left");
+
+
+
+
+
+
 
 
     }
