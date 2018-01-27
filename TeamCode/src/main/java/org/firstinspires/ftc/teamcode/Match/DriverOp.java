@@ -131,8 +131,7 @@ public class DriverOp extends OpMode {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        servoUpDown.setDirection(Servo.Direction.REVERSE);
-        servoUpDown.setPosition(0.3);
+        servoUpDown.setPosition(1);
 
 
 
