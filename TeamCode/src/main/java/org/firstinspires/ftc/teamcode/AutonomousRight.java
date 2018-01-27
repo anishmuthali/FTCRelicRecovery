@@ -76,7 +76,7 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="AutoRight", group="Pushbot")
+@Autonomous(name="AutoRight", group="Autonomous")
 //@Disabled
 public class AutonomousRight extends LinearOpMode {
 
@@ -107,6 +107,9 @@ public class AutonomousRight extends LinearOpMode {
 
     VuforiaLocalizer vuforia;
 
+    Servo rightClaw;
+    Servo leftClaw;
+
     @Override
 
 
@@ -134,6 +137,11 @@ public class AutonomousRight extends LinearOpMode {
         robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        rightClaw = hardwareMap.servo.get("right");
+        leftClaw = hardwareMap.servo.get("left");
+
+        rightClaw.setPosition(0.5);
+        leftClaw.setPosition(0.5);
         servoUpDown = hardwareMap.get(Servo.class, "servoUpDown");
 
 
@@ -231,19 +239,22 @@ public class AutonomousRight extends LinearOpMode {
         if(pictographNumber==1){
             encoderDrive(DRIVE_SPEED,  4,  4, 4.0);
             telemetry.addData("Pictograph: ", pictographNumber);
+            telemetry.update();
 
         }else if(pictographNumber==2){
-            encoderDrive(DRIVE_SPEED,  2,  2, 4);
+            encoderDrive(DRIVE_SPEED,  1,  1, 4);
             telemetry.addData("Pictograph: ", pictographNumber);
+            telemetry.update();
 
         }else{
             encoderDrive(DRIVE_SPEED,  0.3,  0.3, 4);
             telemetry.addData("Pictograph: ", pictographNumber);
+            telemetry.update();
 
         }
 
         telemetry.update();
-        encoderDrive(TURN_SPEED,   -4.4 ,4.4, 4.0);
+        encoderDrive(TURN_SPEED,   -4.6 ,4.6, 4.0);
         encoderDrive(DRIVE_SPEED,  1.25,  1.25, 4.0);
 
 

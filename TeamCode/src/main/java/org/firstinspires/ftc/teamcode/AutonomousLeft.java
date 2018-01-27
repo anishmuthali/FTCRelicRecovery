@@ -76,7 +76,7 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="AutoRight", group="Pushbot")
+@Autonomous(name="AutoLeft", group="Autonomous")
 //@Disabled
 public class AutonomousLeft extends LinearOpMode {
 
