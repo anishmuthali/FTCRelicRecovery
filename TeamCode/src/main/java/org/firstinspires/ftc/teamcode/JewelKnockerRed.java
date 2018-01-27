@@ -40,47 +40,39 @@ public class JewelKnockerRed extends LinearOpMode{
 
         servoUpDown.setDirection(Servo.Direction.REVERSE);
         servoUpDown.setPosition(0.2);
-        servoSide.setPosition(0.5);
+        servoSide.setPosition(0.6);
         sleep(1000);
         servoUpDown.setPosition(0.6);
 
 
 
+        sleep(1000);
+        servoUpDown.setPosition(0.5);
+        sleep(1000);
 
 
-        //while (opModeIsActive()) {
-
-            sleep(1000);
-            servoUpDown.setPosition(0.5);
-            sleep(1000);
-
-
-            telemetry.addData("Red Value:", colorsensor.red());
-            telemetry.addData("Blue Value:", colorsensor.blue());
+        telemetry.addData("Red Value:", colorsensor.red());
+        telemetry.addData("Blue Value:", colorsensor.blue());
+        telemetry.update();
+        if (colorsensor.blue() > colorsensor.red()) {
+            servoSide.setPosition(0.0);
+            telemetry.addLine("Blue");
+            telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
+            telemetry.addData("servoSide: ", servoSide.getPosition());
             telemetry.update();
-            if (colorsensor.blue() > colorsensor.red()) {
-                servoSide.setPosition(0.0);
-                telemetry.addLine("Blue");
-                telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
-                telemetry.addData("servoSide: ", servoSide.getPosition());
-                telemetry.update();
-                sleep(2000);
+            sleep(1000);
+        } else {
+            servoSide.setPosition(0.8);
+            telemetry.addLine("Red");
+            telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
+            telemetry.addData("servoSide: ", servoSide.getPosition());
+            telemetry.update();
+            sleep(1000);
+        }
 
-            } else {
-                servoSide.setPosition(0.8);
-                telemetry.addLine("Red");
-                telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
-                telemetry.addData("servoSide: ", servoSide.getPosition());
-                telemetry.update();
-                sleep(2000);
-
-
-            }
-
-
-        //}
-
-
+        servoSide.setPosition(0.0);
+        servoUpDown.setPosition(0.2);
+        sleep(2000);
     }
 
 
