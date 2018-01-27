@@ -35,6 +35,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.teamcode.library.HardWareMap;
 
 /**
@@ -64,12 +76,12 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Drive By Encoder right stone", group="Pushbot")
+@Autonomous(name="AutoRight", group="Pushbot")
 //@Disabled
-public class AutoDriveByEncoderRightSide extends LinearOpMode {
+public class AutonomousRight extends LinearOpMode {
 
     /* Declare OpMode members. */
-        HardWareMap         robot   = new HardWareMap();   // Use a Pushbot's hardware
+    HardWareMap         robot   = new HardWareMap();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
@@ -81,7 +93,25 @@ public class AutoDriveByEncoderRightSide extends LinearOpMode {
     static final double     TURN_SPEED              = 0.15;
     private Servo servoUpDown = null;
 
+
+    OpenGLMatrix lastLocation = null; // WARNING: VERY INACCURATE, USE ONLY TO ADJUST TO FIND IMAGE AGAIN! DO NOT BASE MAJOR MOVEMENTS OFF OF THIS!!
+    double tX; // X value extracted from our the offset of the traget relative to the robot.
+    double tZ; // Same as above but for Z
+    double tY; // Same as above but for Y
+    // -----------------------------------
+    double rX; // X value extracted from the rotational components of the tartget relitive to the robot
+    double rY; // Same as above but for Y
+    double rZ; // Same as above but for Z
+
+    int pictographNumber=1;
+
+    VuforiaLocalizer vuforia;
+
     @Override
+
+
+
+
     public void runOpMode() {
 
         /*
@@ -118,22 +148,122 @@ public class AutoDriveByEncoderRightSide extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  3.25,  3.25, 4.0);
-        sleep(3000);
-        encoderDrive(DRIVE_SPEED,  3.25,  3.25, 4.0);
+        encoderDrive(DRIVE_SPEED,  2.75,  2.75, 4.0);
+
+
+
+
+
+        //right = hardwareMap.dcMotor.get("r"); // Random Motor
+        //left = hardwareMap.dcMotor.get("l"); // Random Motor
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        parameters.vuforiaLicenseKey = "ATFPVM//////AAAAGaQHWEogN040pj3lfJLK7WBPALzW4HCPJ4QGUQF667wsO4dj3DhNgABmt9RE0xFVOUN0KNT8KbS6dVE1WoszPV3xW/iCtg4TTi/QIr+0WP+L+qN9qf86PYsGTsnFb/7h3K5Torwiu+iej/z4HU/Mkx0ldYJfMwtKNKYhbTT9ZbxJ/3YE5lIt4rTkOrszpiqV3t7A6QZRhOcynT/+xen5K7JmMkK9Fn6sdKTsMjZ2wtBdGKUQVbGKkJjABXOzXKbI9kPeVJwOmidLebrbXxpa3Wyp7bNgzmniWuogMoEOmmDR41vXlCNtLUMHlIubuhqHb2nbXqDIQbtnQRCf+9EUvIdDhVDBW/egNDiL605dms/Y";
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK; // Use FRONT Camera (Change to BACK if you want to use that one)
+        parameters.cameraMonitorFeedback = VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES; // Display Axes
+
+        this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+        VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
+        VuforiaTrackable relicTemplate = relicTrackables.get(0);
+
+        relicTrackables.activate(); // Activate Vuforia
+
+        while (true)
+        {
+            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+            if (vuMark != RelicRecoveryVuMark.UNKNOWN) { // Test to see if image is visable
+                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) relicTemplate.getListener()).getPose(); // Get Positional value to use later
+                telemetry.addData("Pose", format(pose));
+                if (pose != null)
+                {
+                    VectorF trans = pose.getTranslation();
+                    Orientation rot = Orientation.getOrientation(pose, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+
+                    // Extract the X, Y, and Z components of the offset of the target relative to the robot
+                    tX = trans.get(0);
+                    tY = trans.get(1);
+                    tZ = trans.get(2);
+
+                    // Extract the rotational components of the target relative to the robot. NOTE: VERY IMPORTANT IF BASING MOVEMENT OFF OF THE IMAGE!!!!
+                    rX = rot.firstAngle;
+                    rY = rot.secondAngle;
+                    rZ = rot.thirdAngle;
+                }
+                if (vuMark == RelicRecoveryVuMark.LEFT)
+                { // Test to see if Image is the "LEFT" image and display value.
+                    telemetry.addData("VuMark is", "Left");
+                    telemetry.addData("X =", tX);
+                    telemetry.addData("Y =", tY);
+                    telemetry.addData("Z =", tZ);
+                    pictographNumber=1;
+                    break;
+                } else if (vuMark == RelicRecoveryVuMark.RIGHT)
+                { // Test to see if Image is the "RIGHT" image and display values.
+                    telemetry.addData("VuMark is", "Right");
+                    telemetry.addData("X =", tX);
+                    telemetry.addData("Y =", tY);
+                    telemetry.addData("Z =", tZ);
+                    pictographNumber=3;
+                    break;
+                } else if (vuMark == RelicRecoveryVuMark.CENTER)
+                { // Test to see if Image is the "CENTER" image and display values.
+                    telemetry.addData("VuMark is", "Center");
+                    telemetry.addData("X =", tX);
+                    telemetry.addData("Y =", tY);
+                    telemetry.addData("Z =", tZ);
+                    pictographNumber=2;
+                    break;
+
+                }
+            } else
+            {
+                telemetry.addData("VuMark", "not visible");
+            }
+            telemetry.update();
+        }
+
+
+
+
+        sleep(2000);
+        encoderDrive(DRIVE_SPEED,  3.75,  3.75, 4.0);
         encoderDrive(TURN_SPEED,   3.8, -3.8, 4.0);
-
+        if(pictographNumber==1){
             encoderDrive(DRIVE_SPEED,  4,  4, 4.0);
+            telemetry.addData("Pictograph: ", pictographNumber);
 
+        }else if(pictographNumber==2){
+            encoderDrive(DRIVE_SPEED,  2,  2, 4);
+            telemetry.addData("Pictograph: ", pictographNumber);
 
+        }else{
+            encoderDrive(DRIVE_SPEED,  0.3,  0.3, 4);
+            telemetry.addData("Pictograph: ", pictographNumber);
 
-        encoderDrive(TURN_SPEED,   -4.0 ,4.0, 4.0);
-        encoderDrive(DRIVE_SPEED,  1,  1, 4.0);
+        }
+
+        telemetry.update();
+        encoderDrive(TURN_SPEED,   -4.2 ,4.2, 4.0);
+        encoderDrive(DRIVE_SPEED,  1.25,  1.25, 4.0);
 
 
         telemetry.addData("Path", "Complete");
 
-        telemetry.update();
+
+
+
+    }
+
+
+
+
+
+
+
+
+    String format(OpenGLMatrix transformationMatrix)
+    {
+        return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
     }
 
     /*

@@ -40,7 +40,7 @@ public class JewelKnockerRed extends LinearOpMode{
 
         servoUpDown.setDirection(Servo.Direction.REVERSE);
         servoUpDown.setPosition(0.2);
-        servoSide.setPosition(0.6);
+        servoSide.setPosition(0.55);
         sleep(1000);
         servoUpDown.setPosition(0.6);
 

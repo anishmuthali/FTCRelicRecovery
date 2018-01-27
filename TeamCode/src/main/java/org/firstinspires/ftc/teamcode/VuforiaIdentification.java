@@ -35,10 +35,10 @@ public class VuforiaIdentification extends LinearOpMode
     double rY; // Same as above but for Y
     double rZ; // Same as above but for Z
 
-   // DcMotor right; // Random Motor
-   // DcMotor left; // Random Motor
+     int pictographNumber=1;
 
     VuforiaLocalizer vuforia;
+
 
     public void runOpMode()
     {
@@ -57,7 +57,7 @@ public class VuforiaIdentification extends LinearOpMode
 
         relicTrackables.activate(); // Activate Vuforia
 
-        while (opModeIsActive())
+        while (true)
         {
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) { // Test to see if image is visable
@@ -84,18 +84,24 @@ public class VuforiaIdentification extends LinearOpMode
                     telemetry.addData("X =", tX);
                     telemetry.addData("Y =", tY);
                     telemetry.addData("Z =", tZ);
+                    pictographNumber=1;
+                    break;
                 } else if (vuMark == RelicRecoveryVuMark.RIGHT)
                 { // Test to see if Image is the "RIGHT" image and display values.
                     telemetry.addData("VuMark is", "Right");
                     telemetry.addData("X =", tX);
                     telemetry.addData("Y =", tY);
                     telemetry.addData("Z =", tZ);
+                    pictographNumber=2;
+                    break;
                 } else if (vuMark == RelicRecoveryVuMark.CENTER)
                 { // Test to see if Image is the "CENTER" image and display values.
                     telemetry.addData("VuMark is", "Center");
                     telemetry.addData("X =", tX);
                     telemetry.addData("Y =", tY);
                     telemetry.addData("Z =", tZ);
+                    pictographNumber=3;
+                    break;
 
                 }
             } else
@@ -104,6 +110,10 @@ public class VuforiaIdentification extends LinearOpMode
             }
             telemetry.update();
         }
+    }
+
+    public int getPictographNumber(){
+        return pictographNumber;
     }
     String format(OpenGLMatrix transformationMatrix)
     {
