@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Match;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -77,9 +77,9 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="RedTeamAuto1", group="Autonomous")
+@Autonomous(name="BlueTeamAuto1", group="MatchCode")
 //@Disabled
-public class RedTeamAuto1 extends LinearOpMode {
+public class BlueTeamAuto1 extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardWareMap         robot   = new HardWareMap();   // Use a Pushbot's hardware
@@ -90,8 +90,8 @@ public class RedTeamAuto1 extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.15;
-    static final double     TURN_SPEED              = 0.15;
+    static final double     DRIVE_SPEED             = 0.2;
+    static final double     TURN_SPEED              = 0.2;
 
 
 
@@ -106,7 +106,7 @@ public class RedTeamAuto1 extends LinearOpMode {
     double rY; // Same as above but for Y
     double rZ; // Same as above but for Z
 
-    int pictographNumber=3;
+    int pictographNumber=1;
 
     VuforiaLocalizer vuforia;
 
@@ -156,30 +156,31 @@ public class RedTeamAuto1 extends LinearOpMode {
 
 
         jewelKnocker();
-        encoderDrive(DRIVE_SPEED,  2.75,  2.75, 4.0);
-        imageRecognition();;
-        encoderDrive(DRIVE_SPEED,  4,  4, 4.0);
-        encoderDrive(TURN_SPEED,   3.8, -3.8, 4.0);
+        encoderDrive(DRIVE_SPEED,  -2.75,  -2.75, 4.0);
+        pictographNumber = imageRecognition();
+        encoderDrive(DRIVE_SPEED,  -1.5,  -1.5, 4.0);
+        encoderDrive(TURN_SPEED,   4, -4, 4.0);
 
 
-        if(pictographNumber==1){
-            encoderDrive(DRIVE_SPEED,  5.5,  5.5, 4.0);
+        if(pictographNumber==3){
+            encoderDrive(DRIVE_SPEED,5  ,  5, 4.0);
             telemetry.addData("Pictograph: ", pictographNumber);
             telemetry.update();
         }else if(pictographNumber==2){
-            encoderDrive(DRIVE_SPEED,  2.5,  2.5, 4);
+            encoderDrive(DRIVE_SPEED,  3,  3, 4);
             telemetry.addData("Pictograph: ", pictographNumber);
             telemetry.update();
         }else{
-            encoderDrive(DRIVE_SPEED,  0.3,  0.3, 4);
+            encoderDrive(DRIVE_SPEED,  1.75,  1.75, 4);
             telemetry.addData("Pictograph: ", pictographNumber);
             telemetry.update();
         }
-        encoderDrive(TURN_SPEED,   -4.5 ,4.5, 4.0);
-        encoderDrive(DRIVE_SPEED,  1.25,  1.25, 4.0);
+        encoderDrive(TURN_SPEED,   4.4 ,-3.6, 4.0);
+        encoderDrive(DRIVE_SPEED,  2,  2, 4.0);
         robot.rightClaw.setPosition(1);
-        robot.leftClaw.setPosition(1);
-        sleep(1500);
+        robot.leftClaw.setPosition(0);
+        sleep(3000);
+        encoderDrive(DRIVE_SPEED,  -3,  -3, 4.0);
 
         telemetry.addData("Path", "Complete");
 
@@ -220,8 +221,8 @@ public class RedTeamAuto1 extends LinearOpMode {
         telemetry.addData("Red Value:", robot.colorsensor.red());
         telemetry.addData("Blue Value:", robot.colorsensor.blue());
         telemetry.update();
-        if (robot.colorsensor.blue() > robot.colorsensor.red()) {
-            robot.servoSide.setPosition(0.0);
+        if (robot.colorsensor.blue() < robot.colorsensor.red()) {
+            robot.servoSide.setPosition(0.2);
             telemetry.addLine("Blue");
             telemetry.addData("servoUpDown: ", robot.servoUpDown.getPosition());
             telemetry.addData("servoSide: ", robot.servoSide.getPosition());
@@ -229,7 +230,7 @@ public class RedTeamAuto1 extends LinearOpMode {
             sleep(1000);
 
         } else {
-            robot.servoSide.setPosition(0.8);
+            robot.servoSide.setPosition(0.7);
             telemetry.addLine("Red");
             telemetry.addData("servoUpDown: ", robot.servoUpDown.getPosition());
             telemetry.addData("servoSide: ", robot.servoSide.getPosition());
@@ -239,7 +240,7 @@ public class RedTeamAuto1 extends LinearOpMode {
         }
 
         robot.servoSide.setPosition(0.55);
-        robot.servoUpDown.setPosition(0.8);
+        robot.servoUpDown.setPosition(0.9);
         sleep(1000);
     }
 
@@ -251,7 +252,7 @@ public class RedTeamAuto1 extends LinearOpMode {
 
 
 
-    public void imageRecognition(){
+    public int imageRecognition(){
         //right = hardwareMap.dcMotor.get("r"); // Random Motor
         //left = hardwareMap.dcMotor.get("l"); // Random Motor
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -266,7 +267,7 @@ public class RedTeamAuto1 extends LinearOpMode {
 
         relicTrackables.activate(); // Activate Vuforia
 
-        while (getRuntime()<2000)
+        while (getRuntime()<17)
         {
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) { // Test to see if image is visable
@@ -293,24 +294,24 @@ public class RedTeamAuto1 extends LinearOpMode {
                     telemetry.addData("X =", tX);
                     telemetry.addData("Y =", tY);
                     telemetry.addData("Z =", tZ);
-                    pictographNumber=1;
-                    break;
+                    return 1;
+
                 } else if (vuMark == RelicRecoveryVuMark.RIGHT)
                 { // Test to see if Image is the "RIGHT" image and display values.
                     telemetry.addData("VuMark is", "Right");
                     telemetry.addData("X =", tX);
                     telemetry.addData("Y =", tY);
                     telemetry.addData("Z =", tZ);
-                    pictographNumber=3;
-                    break;
+                    return 3;
+
                 } else if (vuMark == RelicRecoveryVuMark.CENTER)
                 { // Test to see if Image is the "CENTER" image and display values.
                     telemetry.addData("VuMark is", "Center");
                     telemetry.addData("X =", tX);
                     telemetry.addData("Y =", tY);
                     telemetry.addData("Z =", tZ);
-                    pictographNumber=2;
-                    break;
+                    return 2;
+
 
                 }
             } else
@@ -319,6 +320,7 @@ public class RedTeamAuto1 extends LinearOpMode {
             }
             telemetry.update();
         }
+        return 1;
     }
 
 

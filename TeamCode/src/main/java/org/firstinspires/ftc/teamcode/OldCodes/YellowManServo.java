@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 //COMPLETED: Nitin, plz comment this when you're free. I've done the comments for basically all the other classes. Remember to be specific and includes the algorithm and methodology.
 //getting the servo on the claw to grab the yellow man
 @TeleOp(name="YellowManServo", group="OpMode")
-//@Disabled
+@Disabled
 public class YellowManServo extends OpMode{
     ElapsedTime runtime = new ElapsedTime();
     private Servo servo1 = null;

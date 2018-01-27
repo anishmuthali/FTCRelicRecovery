@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.OldCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by anishmuthali on 1/21/18.
  */
 @Autonomous(name="AutonomousMovementTest")
+@Disabled
 public class AutonomousMovementTest extends OpMode {
     private DcMotor frontLeft = null;
     private DcMotor frontRight = null;

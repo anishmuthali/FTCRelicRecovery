@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode.OldCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -65,7 +66,7 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
  */
 
 @Autonomous(name="Auto Drive By Encoder right stone", group="Pushbot")
-//@Disabled
+@Disabled
 public class AutoDriveByEncoderRightSide extends LinearOpMode {
 
     /* Declare OpMode members. */

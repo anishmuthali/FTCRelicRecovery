@@ -23,7 +23,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * Created by Alex on 9/9/17.
 */
   @Autonomous(name = "VuforiaRelic", group = "Autonomous")
-//@Disabled
+@Disabled
 public class VuforiaIdentification extends LinearOpMode
 {
     OpenGLMatrix lastLocation = null; // WARNING: VERY INACCURATE, USE ONLY TO ADJUST TO FIND IMAGE AGAIN! DO NOT BASE MAJOR MOVEMENTS OFF OF THIS!!

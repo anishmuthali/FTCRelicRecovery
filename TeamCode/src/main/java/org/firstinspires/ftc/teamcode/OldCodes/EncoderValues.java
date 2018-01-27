@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OldCodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.util.Range;
  * Created by anishmuthali on 1/19/18.
  */
 @TeleOp(name="EncoderValues", group="OpMode")
+@Disabled
 public class EncoderValues extends OpMode {
     private DcMotor frontLeft = null;
     private DcMotor frontRight = null;

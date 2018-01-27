@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.OldCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by Alex on 1/13/2018.
  */
 @Autonomous(name = "AutoDriveTest")
+@Disabled
 public class AutoDriveTest extends LinearOpMode{
 
     //Objects for Wheels

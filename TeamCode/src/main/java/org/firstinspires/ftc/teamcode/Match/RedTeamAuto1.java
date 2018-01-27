@@ -27,11 +27,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Match;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -77,9 +77,9 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="AutoRight", group="Autonomous")
-@Disabled
-public class AutonomousRight extends LinearOpMode {
+@Autonomous(name="RedTeamAuto1", group="MatchCode")
+//@Disabled
+public class RedTeamAuto1 extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardWareMap         robot   = new HardWareMap();   // Use a Pushbot's hardware
@@ -90,14 +90,13 @@ public class AutonomousRight extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.15;
-    static final double     TURN_SPEED              = 0.15;
-
-
-    private Servo servoUpDown = null;
+    static final double     DRIVE_SPEED             = 0.2;
+    static final double     TURN_SPEED              = 0.2;
 
 
 
+
+    //Declaration for Vuforia
     OpenGLMatrix lastLocation = null; // WARNING: VERY INACCURATE, USE ONLY TO ADJUST TO FIND IMAGE AGAIN! DO NOT BASE MAJOR MOVEMENTS OFF OF THIS!!
     double tX; // X value extracted from our the offset of the traget relative to the robot.
     double tZ; // Same as above but for Z
@@ -107,12 +106,11 @@ public class AutonomousRight extends LinearOpMode {
     double rY; // Same as above but for Y
     double rZ; // Same as above but for Z
 
-    int pictographNumber=3;
+    int pictographNumber=1;
 
     VuforiaLocalizer vuforia;
 
-    Servo rightClaw;
-    Servo leftClaw;
+
 
     @Override
 
@@ -128,7 +126,7 @@ public class AutonomousRight extends LinearOpMode {
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Resetting Encoders");    //
+        telemetry.addData("Status", "Resetting Encoders");
         telemetry.update();
 
         robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -141,12 +139,8 @@ public class AutonomousRight extends LinearOpMode {
         robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        rightClaw = hardwareMap.servo.get("right");
-        leftClaw = hardwareMap.servo.get("left");
 
-        rightClaw.setPosition(0.5);
-        leftClaw.setPosition(0.5);
-        servoUpDown = hardwareMap.get(Servo.class, "servoUpDown");
+
 
 
         // Send telemetry message to indicate successful Encoder reset
@@ -157,15 +151,110 @@ public class AutonomousRight extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+        robot.rightClaw.setPosition(0.5);
+        robot.leftClaw.setPosition(0.5);
 
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
+
+        jewelKnocker();
         encoderDrive(DRIVE_SPEED,  2.75,  2.75, 4.0);
+        pictographNumber = imageRecognition();
+        telemetry.addData("pictographNumber", "" + pictographNumber);
+        telemetry.update();
+        encoderDrive(DRIVE_SPEED,  3.5,  3.5, 4.0);
+        encoderDrive(TURN_SPEED,   4, -4, 4.0);
+
+
+        if(pictographNumber==1){
+            encoderDrive(DRIVE_SPEED,5  ,  5, 4.0);
+            telemetry.addData("Pictograph: ", pictographNumber);
+            telemetry.update();
+        }else if(pictographNumber==2){
+            encoderDrive(DRIVE_SPEED,  3,  3, 4);
+            telemetry.addData("Pictograph: ", pictographNumber);
+            telemetry.update();
+        }else{
+            encoderDrive(DRIVE_SPEED,  0.5,  0.5, 4);
+            telemetry.addData("Pictograph: ", pictographNumber);
+            telemetry.update();
+        }
+        encoderDrive(TURN_SPEED,   -4.4 ,4.4, 4.0);
+        encoderDrive(DRIVE_SPEED,  1.25,  1.25, 4.0);
+        robot.rightClaw.setPosition(1);
+        robot.leftClaw.setPosition(0);
+        sleep(3000);
+        encoderDrive(DRIVE_SPEED,  -1.25,  -1.25, 4.0);
+
+        telemetry.addData("Path", "Complete");
+
+
+
+
+    }
 
 
 
 
 
+
+
+
+    String format(OpenGLMatrix transformationMatrix)
+    {
+        return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
+    }
+
+
+
+
+
+
+    public void jewelKnocker(){
+        robot.servoUpDown.setPosition(0.8);
+        robot.servoSide.setPosition(0.55);
+        sleep(1000);
+
+
+
+
+        robot.servoUpDown.setPosition(0.13);
+        sleep(1000);
+
+
+        telemetry.addData("Red Value:", robot.colorsensor.red());
+        telemetry.addData("Blue Value:", robot.colorsensor.blue());
+        telemetry.update();
+        if (robot.colorsensor.blue() > robot.colorsensor.red()) {
+            robot.servoSide.setPosition(0.2);
+            telemetry.addLine("Blue");
+            telemetry.addData("servoUpDown: ", robot.servoUpDown.getPosition());
+            telemetry.addData("servoSide: ", robot.servoSide.getPosition());
+            telemetry.update();
+            sleep(1000);
+
+        } else {
+            robot.servoSide.setPosition(0.7);
+            telemetry.addLine("Red");
+            telemetry.addData("servoUpDown: ", robot.servoUpDown.getPosition());
+            telemetry.addData("servoSide: ", robot.servoSide.getPosition());
+            telemetry.update();
+            sleep(1000);
+
+        }
+
+        robot.servoSide.setPosition(0.55);
+        robot.servoUpDown.setPosition(0.9);
+        sleep(1000);
+    }
+
+
+
+
+
+
+
+
+
+    public int imageRecognition(){
         //right = hardwareMap.dcMotor.get("r"); // Random Motor
         //left = hardwareMap.dcMotor.get("l"); // Random Motor
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -180,9 +269,7 @@ public class AutonomousRight extends LinearOpMode {
 
         relicTrackables.activate(); // Activate Vuforia
 
-
-
-        while (getRuntime()<2000)
+        while (getRuntime()<17)
         {
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) { // Test to see if image is visable
@@ -209,24 +296,24 @@ public class AutonomousRight extends LinearOpMode {
                     telemetry.addData("X =", tX);
                     telemetry.addData("Y =", tY);
                     telemetry.addData("Z =", tZ);
-                    pictographNumber=1;
-                    break;
+                    return 1;
+
                 } else if (vuMark == RelicRecoveryVuMark.RIGHT)
                 { // Test to see if Image is the "RIGHT" image and display values.
                     telemetry.addData("VuMark is", "Right");
                     telemetry.addData("X =", tX);
                     telemetry.addData("Y =", tY);
                     telemetry.addData("Z =", tZ);
-                    pictographNumber=3;
-                    break;
+                    return 3;
+
                 } else if (vuMark == RelicRecoveryVuMark.CENTER)
                 { // Test to see if Image is the "CENTER" image and display values.
                     telemetry.addData("VuMark is", "Center");
                     telemetry.addData("X =", tX);
                     telemetry.addData("Y =", tY);
                     telemetry.addData("Z =", tZ);
-                    pictographNumber=2;
-                    break;
+                    return 2;
+
 
                 }
             } else
@@ -235,39 +322,7 @@ public class AutonomousRight extends LinearOpMode {
             }
             telemetry.update();
         }
-
-
-
-
-        encoderDrive(DRIVE_SPEED,  4,  4, 4.0);
-        encoderDrive(TURN_SPEED,   3.8, -3.8, 4.0);
-        if(pictographNumber==1){
-            encoderDrive(DRIVE_SPEED,  5,  5, 4.0);
-            telemetry.addData("Pictograph: ", pictographNumber);
-            telemetry.update();
-
-        }else if(pictographNumber==2){
-            encoderDrive(DRIVE_SPEED,  2.5,  2.5, 4);
-            telemetry.addData("Pictograph: ", pictographNumber);
-            telemetry.update();
-
-        }else{
-            encoderDrive(DRIVE_SPEED,  0.3,  0.3, 4);
-            telemetry.addData("Pictograph: ", pictographNumber);
-            telemetry.update();
-
-        }
-
-        telemetry.update();
-        encoderDrive(TURN_SPEED,   -4.4 ,4.4, 4.0);
-        encoderDrive(DRIVE_SPEED,  1.25,  1.25, 4.0);
-
-
-        telemetry.addData("Path", "Complete");
-
-
-
-
+        return 1;
     }
 
 
@@ -275,12 +330,6 @@ public class AutonomousRight extends LinearOpMode {
 
 
 
-
-
-    String format(OpenGLMatrix transformationMatrix)
-    {
-        return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
-    }
 
     /*
      *  Method to perfmorm a relative move, based on encoder counts.
@@ -290,14 +339,12 @@ public class AutonomousRight extends LinearOpMode {
      *  2) Move runs out of time
      *  3) Driver stops the opmode running.
      */
-    public void encoderDrive(double speed,
-                             double leftInches, double rightInches,
-                             double timeoutS) {
+    public void encoderDrive(double speed, double leftInches, double rightInches, double timeoutS) {
         int newLeftTarget;
         int newRightTarget;
 
-        servoUpDown.setDirection(Servo.Direction.REVERSE);
-        servoUpDown.setPosition(0.2);
+        robot.servoUpDown.setDirection(Servo.Direction.REVERSE);
+        robot.servoUpDown.setPosition(0.2);
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
