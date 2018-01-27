@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OldCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -77,9 +77,9 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="AutoLeft", group="Autonomous")
+@Autonomous(name="AutoRight", group="Autonomous")
 @Disabled
-public class AutonomousLeft extends LinearOpMode {
+public class AutonomousRight extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardWareMap         robot   = new HardWareMap();   // Use a Pushbot's hardware
@@ -92,7 +92,10 @@ public class AutonomousLeft extends LinearOpMode {
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.15;
     static final double     TURN_SPEED              = 0.15;
+
+
     private Servo servoUpDown = null;
+
 
 
     OpenGLMatrix lastLocation = null; // WARNING: VERY INACCURATE, USE ONLY TO ADJUST TO FIND IMAGE AGAIN! DO NOT BASE MAJOR MOVEMENTS OFF OF THIS!!
@@ -104,9 +107,12 @@ public class AutonomousLeft extends LinearOpMode {
     double rY; // Same as above but for Y
     double rZ; // Same as above but for Z
 
-    int pictographNumber=1;
+    int pictographNumber=3;
 
     VuforiaLocalizer vuforia;
+
+    Servo rightClaw;
+    Servo leftClaw;
 
     @Override
 
@@ -135,6 +141,11 @@ public class AutonomousLeft extends LinearOpMode {
         robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        rightClaw = hardwareMap.servo.get("right");
+        leftClaw = hardwareMap.servo.get("left");
+
+        rightClaw.setPosition(0.5);
+        leftClaw.setPosition(0.5);
         servoUpDown = hardwareMap.get(Servo.class, "servoUpDown");
 
 
@@ -149,7 +160,7 @@ public class AutonomousLeft extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  -2.75,  -2.75, 4.0);
+        encoderDrive(DRIVE_SPEED,  2.75,  2.75, 4.0);
 
 
 
@@ -169,7 +180,9 @@ public class AutonomousLeft extends LinearOpMode {
 
         relicTrackables.activate(); // Activate Vuforia
 
-        while (true)
+
+
+        while (getRuntime()<2000)
         {
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) { // Test to see if image is visable
@@ -226,25 +239,27 @@ public class AutonomousLeft extends LinearOpMode {
 
 
 
-        sleep(2000);
-        encoderDrive(DRIVE_SPEED,  -3.75,  -3.75, 4.0);
-        encoderDrive(TURN_SPEED,   -3.8, 3.8, 4.0);
+        encoderDrive(DRIVE_SPEED,  4,  4, 4.0);
+        encoderDrive(TURN_SPEED,   3.8, -3.8, 4.0);
         if(pictographNumber==1){
-            encoderDrive(DRIVE_SPEED,  4,  4, 4.0);
+            encoderDrive(DRIVE_SPEED,  5,  5, 4.0);
             telemetry.addData("Pictograph: ", pictographNumber);
+            telemetry.update();
 
         }else if(pictographNumber==2){
-            encoderDrive(DRIVE_SPEED,  2,  2, 4);
+            encoderDrive(DRIVE_SPEED,  2.5,  2.5, 4);
             telemetry.addData("Pictograph: ", pictographNumber);
+            telemetry.update();
 
         }else{
             encoderDrive(DRIVE_SPEED,  0.3,  0.3, 4);
             telemetry.addData("Pictograph: ", pictographNumber);
+            telemetry.update();
 
         }
 
         telemetry.update();
-        encoderDrive(TURN_SPEED,   4.6 ,-4.6, 4.0);
+        encoderDrive(TURN_SPEED,   -4.4 ,4.4, 4.0);
         encoderDrive(DRIVE_SPEED,  1.25,  1.25, 4.0);
 
 

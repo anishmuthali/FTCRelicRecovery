@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OldCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by Alex on 1/13/2018.
  */
-@Autonomous(name = "JewelKnockerRed")
+@Autonomous(name = "JewelKnockerBlue")
 @Disabled
-public class JewelKnockerRed extends LinearOpMode{
+public class JewelKnockerBlue extends LinearOpMode{
 
     private ColorSensor colorsensor = null;
     private Servo servoUpDown = null;
@@ -38,7 +38,6 @@ public class JewelKnockerRed extends LinearOpMode{
         leftClaw.setPosition(0.5);
 
 
-
         servoUpDown.setPosition(0.8);
         servoSide.setPosition(0.55);
         sleep(1000);
@@ -53,14 +52,13 @@ public class JewelKnockerRed extends LinearOpMode{
         telemetry.addData("Red Value:", colorsensor.red());
         telemetry.addData("Blue Value:", colorsensor.blue());
         telemetry.update();
-        if (colorsensor.blue() > colorsensor.red()) {
+        if (colorsensor.blue() < colorsensor.red()) {
             servoSide.setPosition(0.0);
             telemetry.addLine("Blue");
             telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
             telemetry.addData("servoSide: ", servoSide.getPosition());
             telemetry.update();
             sleep(1000);
-
         } else {
             servoSide.setPosition(0.8);
             telemetry.addLine("Red");
@@ -68,12 +66,10 @@ public class JewelKnockerRed extends LinearOpMode{
             telemetry.addData("servoSide: ", servoSide.getPosition());
             telemetry.update();
             sleep(1000);
-
         }
 
         servoUpDown.setPosition(1);
         sleep(1000);
-
     }
 
 

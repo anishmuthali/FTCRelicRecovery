@@ -245,9 +245,9 @@ public class DriverOp extends OpMode {
         }
 
         if (gamepad1.left_bumper || gamepad2.left_bumper) {
-            retractMotor.setPower(0.2);
+            retractMotor.setPower(0.1);
         } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
-            retractMotor.setPower(-0.2);
+            retractMotor.setPower(-0.1);
         } else {
             retractMotor.setPower(0);
         }
