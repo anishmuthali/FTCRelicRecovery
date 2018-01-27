@@ -1,18 +1,19 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OldCodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
+//import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /**
  * Created by anishmuthali on 9/27/17.
  */
-@TeleOp(name="TestBaseOpMode", group="OpMode")
-//@Disabled
+@TeleOp(name="DriveOpMode", group="OpMode")
+@Disabled
 public class DriveOpMode extends OpMode{
-    ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
     private DcMotor frontLeft = null;
     private DcMotor frontRight = null;
     private DcMotor backLeft = null;
@@ -21,6 +22,7 @@ public class DriveOpMode extends OpMode{
     @Override
     public void init() {
         telemetry.addData("Status", "Initialized");
+
 
         // Find motors on hardware map
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
@@ -32,12 +34,13 @@ public class DriveOpMode extends OpMode{
         * Set direction of motors
         * Right: reversed
         * Left: forward (normal)
+        * (reversed on 12/7)
         */
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        backLeft.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
     }
 
     @Override
@@ -47,17 +50,20 @@ public class DriveOpMode extends OpMode{
 
     @Override
     public void loop() {
+
         double leftPower;
         double rightPower;
 
         // Get data from controllers
-        leftPower = -gamepad1.left_stick_y;
-        rightPower = -gamepad1.right_stick_y;
-
+        leftPower = -0.8*(gamepad1.left_stick_y);
+        rightPower = -0.8*(gamepad1.right_stick_y);
+/*
         // Limit values of left and right power
         Range.clip(leftPower, -1.0, 1.0);
         Range.clip(rightPower, -1.0, 1.0);
-
+        (Commented by Alex on 11/28)
+        (Reason: Don't know what it's for!)
+*/
         // Set power of all motors
         frontLeft.setPower(leftPower);
         backLeft.setPower(leftPower);
@@ -66,5 +72,6 @@ public class DriveOpMode extends OpMode{
         backRight.setPower(rightPower);
 
         telemetry.addData("Motors", ("left: " + leftPower + "right: " + rightPower));
+        telemetry.addData("Runtime:", getRuntime());
     }
 }

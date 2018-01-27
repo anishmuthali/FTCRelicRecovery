@@ -1,64 +1,77 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
- * Created by Nitin on 10/17/2017.
+ * Created by Alex on 1/13/2018.
  */
 @Autonomous(name = "JewelKnockerBlue")
-//@Disabled
-public class JewelKnockerBlue extends LinearOpMode
-{
+@Disabled
+public class JewelKnockerBlue extends LinearOpMode{
 
-    private DcMotor frontLeft = null;
-    private DcMotor frontRight = null;
-    private DcMotor backLeft = null;
-    private DcMotor backRight = null;
     private ColorSensor colorsensor = null;
-    private Servo servo1 = null;
-    private Servo servo2 = null;
+    private Servo servoUpDown = null;
+    private Servo servoSide = null;
+    private Servo rightClaw;
+    private Servo leftClaw;
+
+
 
     @Override
-    public void runOpMode()
+    public void runOpMode() throws InterruptedException
     {
         waitForStart();
-        // Find motors on hardware map
-        frontLeft = hardwareMap.get(DcMotor.class, "front_left");
-        frontRight = hardwareMap.get(DcMotor.class, "front_right");
-        backLeft = hardwareMap.get(DcMotor.class, "back_left");
-        backRight = hardwareMap.get(DcMotor.class, "back_right");
-        colorsensor = hardwareMap.get(ColorSensor.class, "jewel_sensor");
-        servo1 = hardwareMap.get(Servo.class, "jewel_knocker_updown");
-        servo2 = hardwareMap.get(Servo.class, "jewel_knocker_sideways");
-
-        servo1.setPosition(0.8);
-        try
-        {
-            backLeft.setPower(1);
-            backRight.setPower(1);
-            Thread.sleep(500);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        backLeft.setPower(0);
-        backRight.setPower(0);
+        // Find servos and sensors on hardware map
+        colorsensor = hardwareMap.get(ColorSensor.class, "colorsensor");
+        servoUpDown = hardwareMap.get(Servo.class, "servoUpDown");
+        servoSide = hardwareMap.get(Servo.class, "servoSide");
+        rightClaw = hardwareMap.servo.get("right");
+        leftClaw = hardwareMap.servo.get("left");
 
 
-        //If the color sensor detects blue, turn the servo in the direction it faces.
-        // If not, turn it in the opposite direction.
-        if (colorsensor.blue() > colorsensor.red())
-        {
-            servo2.setPosition(0.2);
+        rightClaw.setPosition(0.5);
+        leftClaw.setPosition(0.5);
+
+
+        servoUpDown.setPosition(0.8);
+        servoSide.setPosition(0.55);
+        sleep(1000);
+
+
+
+
+        servoUpDown.setPosition(0.1);
+        sleep(1000);
+
+
+        telemetry.addData("Red Value:", colorsensor.red());
+        telemetry.addData("Blue Value:", colorsensor.blue());
+        telemetry.update();
+        if (colorsensor.blue() < colorsensor.red()) {
+            servoSide.setPosition(0.0);
+            telemetry.addLine("Blue");
+            telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
+            telemetry.addData("servoSide: ", servoSide.getPosition());
+            telemetry.update();
+            sleep(1000);
+        } else {
+            servoSide.setPosition(0.8);
+            telemetry.addLine("Red");
+            telemetry.addData("servoUpDown: ", servoUpDown.getPosition());
+            telemetry.addData("servoSide: ", servoSide.getPosition());
+            telemetry.update();
+            sleep(1000);
         }
-        else
-        {
-            servo2.setPosition(0.8);
-        }
+
+        servoUpDown.setPosition(1);
+        sleep(1000);
     }
+
+
+
 }
