@@ -27,14 +27,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OldCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.teamcode.library.HardWareMap;
 
 /**
@@ -64,9 +63,10 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Drive By Encoder right stone", group="Pushbot")
+
+@Autonomous(name="Auto Drive By Encoder left stone", group="Pushbot")
 //@Disabled
-public class AutoDriveByEncoderRightSide extends LinearOpMode {
+public class AutoDriveByEncoderLeftSide extends LinearOpMode {
 
     /* Declare OpMode members. */
         HardWareMap         robot   = new HardWareMap();   // Use a Pushbot's hardware
@@ -77,9 +77,8 @@ public class AutoDriveByEncoderRightSide extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.15;
-    static final double     TURN_SPEED              = 0.15;
-    private Servo servoUpDown = null;
+    static final double     DRIVE_SPEED             = 0.2;
+    static final double     TURN_SPEED              = 0.2;
 
     @Override
     public void runOpMode() {
@@ -104,11 +103,10 @@ public class AutoDriveByEncoderRightSide extends LinearOpMode {
         robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        servoUpDown = hardwareMap.get(Servo.class, "servoUpDown");
 
 
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0",  "Starting at %7d :%7d",
+        telemetry.addData("Path0",  "Starting at %7d:%7d",
                 robot.frontLeft.getCurrentPosition(),
                 robot.frontRight.getCurrentPosition());
         telemetry.update();
@@ -118,21 +116,12 @@ public class AutoDriveByEncoderRightSide extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  3.25,  3.25, 4.0);
-        sleep(3000);
-        encoderDrive(DRIVE_SPEED,  3.25,  3.25, 4.0);
-        encoderDrive(TURN_SPEED,   3.8, -3.8, 4.0);
-
-            encoderDrive(DRIVE_SPEED,  4,  4, 4.0);
-
-
-
-        encoderDrive(TURN_SPEED,   -4.0 ,4.0, 4.0);
-        encoderDrive(DRIVE_SPEED,  1,  1, 4.0);
+        encoderDrive(DRIVE_SPEED,  24,  24, 5.0);
+        encoderDrive(TURN_SPEED,   10, -10, 4.0);
+        encoderDrive(DRIVE_SPEED,  18,  18, 5.0);
 
 
         telemetry.addData("Path", "Complete");
-
         telemetry.update();
     }
 
@@ -147,22 +136,24 @@ public class AutoDriveByEncoderRightSide extends LinearOpMode {
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
-        int newLeftTarget;
-        int newRightTarget;
-
-        servoUpDown.setDirection(Servo.Direction.REVERSE);
-        servoUpDown.setPosition(0.2);
+        int newFrontLeftTarget;
+        int newFrontRightTarget;
+        int newBackLeftTarget;
+        int newBackRightTarget;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.frontLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.frontRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            robot.frontLeft.setTargetPosition(newLeftTarget);
-            robot.backLeft.setTargetPosition(newLeftTarget);
-            robot.backRight.setTargetPosition(newRightTarget);
-            robot.frontRight.setTargetPosition(newRightTarget);
+            newFrontLeftTarget = robot.frontLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newFrontRightTarget = robot.frontRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            newBackRightTarget = robot.backRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            newBackLeftTarget = robot.backLeft.getCurrentPosition()+ (int)(rightInches * COUNTS_PER_INCH);
+
+            robot.backRight.setTargetPosition(newBackRightTarget);
+            robot.frontLeft.setTargetPosition(newFrontLeftTarget);
+            robot.backLeft.setTargetPosition(newBackLeftTarget);
+            robot.frontRight.setTargetPosition(newFrontRightTarget);
 
             // Turn On RUN_TO_POSITION
             robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -189,10 +180,10 @@ public class AutoDriveByEncoderRightSide extends LinearOpMode {
                     (robot.frontRight.isBusy() && robot.frontLeft.isBusy()&& robot.backLeft.isBusy()&& robot.backRight.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
-                telemetry.addData("Path2",  "Running at %7d :%7d",
-                        robot.frontRight.getCurrentPosition(),
-                        robot.frontLeft.getCurrentPosition());
+                telemetry.addData("Path1",  "Running to %7d : %7d", newFrontLeftTarget,  newFrontRightTarget);
+                telemetry.addData("Path2",  "Running at %7d : %7d",
+                        robot.frontLeft.getCurrentPosition(),
+                        robot.frontRight.getCurrentPosition());
                 telemetry.update();
             }
 

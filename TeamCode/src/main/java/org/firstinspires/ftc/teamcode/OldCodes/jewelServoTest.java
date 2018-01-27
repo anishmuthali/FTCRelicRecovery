@@ -45,15 +45,15 @@ public class jewelServoTest extends OpMode {
     public void loop() {
         servoSide.setPosition(0.5);
         if(gamepad1.right_stick_y < 0) {
-            servoUpDown.setPosition(servoUpDown.getPosition() + 0.01);
+            servoUpDown.setPosition(servoUpDown.getPosition() + 0.1);
         } else if(gamepad1.right_stick_y > 0) {
-            servoUpDown.setPosition(servoUpDown.getPosition() - 0.01);
+            servoUpDown.setPosition(servoUpDown.getPosition() - 0.1);
         }
 
         if(gamepad1.left_stick_y < 0) {
-            servoSide.setPosition(servoSide.getPosition() + 0.01);
+            servoSide.setPosition(servoSide.getPosition() + 0.1);
         } else if(gamepad1.left_stick_y > 0) {
-            servoSide.setPosition(servoSide.getPosition() - 0.01);
+            servoSide.setPosition(servoSide.getPosition() - 0.1);
         }
 
         telemetry.addData("servoUpDown: ", servoUpDown.getPosition());

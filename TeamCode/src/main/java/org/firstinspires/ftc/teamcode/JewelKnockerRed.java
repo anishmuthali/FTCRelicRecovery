@@ -37,17 +37,14 @@ public class JewelKnockerRed extends LinearOpMode{
 
 
 
-
-        servoUpDown.setDirection(Servo.Direction.REVERSE);
-        servoUpDown.setPosition(0.2);
+        servoUpDown.setPosition(0.8);
         servoSide.setPosition(0.55);
         sleep(1000);
-        servoUpDown.setPosition(0.6);
 
 
 
-        sleep(1000);
-        servoUpDown.setPosition(0.5);
+
+        servoUpDown.setPosition(0.1);
         sleep(1000);
 
 
@@ -61,6 +58,7 @@ public class JewelKnockerRed extends LinearOpMode{
             telemetry.addData("servoSide: ", servoSide.getPosition());
             telemetry.update();
             sleep(1000);
+
         } else {
             servoSide.setPosition(0.8);
             telemetry.addLine("Red");
@@ -68,11 +66,12 @@ public class JewelKnockerRed extends LinearOpMode{
             telemetry.addData("servoSide: ", servoSide.getPosition());
             telemetry.update();
             sleep(1000);
+
         }
 
-        servoSide.setPosition(0.0);
-        servoUpDown.setPosition(0.2);
-        sleep(2000);
+        servoUpDown.setPosition(1);
+        sleep(1000);
+
     }
 
 
