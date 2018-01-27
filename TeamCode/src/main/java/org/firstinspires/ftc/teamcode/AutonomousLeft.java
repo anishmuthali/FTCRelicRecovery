@@ -78,7 +78,7 @@ import org.firstinspires.ftc.teamcode.library.HardWareMap;
 
 @Autonomous(name="AutoRight", group="Pushbot")
 //@Disabled
-public class AutonomousRight extends LinearOpMode {
+public class AutonomousLeft extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardWareMap         robot   = new HardWareMap();   // Use a Pushbot's hardware
@@ -148,7 +148,7 @@ public class AutonomousRight extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  2.75,  2.75, 4.0);
+        encoderDrive(DRIVE_SPEED,  -2.75,  -2.75, 4.0);
 
 
 
@@ -226,8 +226,8 @@ public class AutonomousRight extends LinearOpMode {
 
 
         sleep(2000);
-        encoderDrive(DRIVE_SPEED,  3.75,  3.75, 4.0);
-        encoderDrive(TURN_SPEED,   3.8, -3.8, 4.0);
+        encoderDrive(DRIVE_SPEED,  -3.75,  -3.75, 4.0);
+        encoderDrive(TURN_SPEED,   -3.8, 3.8, 4.0);
         if(pictographNumber==1){
             encoderDrive(DRIVE_SPEED,  4,  4, 4.0);
             telemetry.addData("Pictograph: ", pictographNumber);
