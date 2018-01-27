@@ -208,20 +208,20 @@ public class DriverOp extends OpMode {
         }
 
         // Code for controlling the claw
-        if(gamepad2.right_stick_x > 0){
+        if(gamepad2.right_stick_x < 0){
             rightClaw.setPosition(0);
         }
-        else if(gamepad2.right_stick_x < 0){
+        else if(gamepad2.right_stick_x > 0){
             rightClaw.setPosition(1);
         }
         else{
             rightClaw.setPosition(0.5);
         }
 
-        if(gamepad2.left_stick_x > 0){
+        if(gamepad2.left_stick_x < 0){
             leftClaw.setPosition(0);
         }
-        else if(gamepad2.left_stick_x < 0){
+        else if(gamepad2.left_stick_x > 0){
             leftClaw.setPosition(1);
         }
         else{
